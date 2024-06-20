@@ -1,0 +1,9 @@
+org.scictrl.csshell.epics.server.application
+org.scictrl.csshell.epics.server.astra
+org.scictrl.csshell.epics.server.bpm
+org.scictrl.csshell.epics.server.jdoocs
+org.scictrl.csshell.epics.server.processor
+org.scictrl.csshell.jdoocs
+org.scictrl.csshell.math
+org.scictrl.csshell.python
+org.scictrl.scripts
