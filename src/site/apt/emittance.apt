@@ -1,0 +1,38 @@
+                ------
+                FLUTE CosntrolSystem Shell Extensions
+                ------
+                ------
+                2023
+           
+           
+  Contents
+
+%{toc|section=2|fromDepth=1|toDepth=3}
+%{toc|section=3|fromDepth=1|toDepth=3}
+
+                
+===
+
+{Introduction}
+
+  Emittance module is designed similar as other scanning tools like Energy or Conditioning scanning tool, it scans Quadrupole magnet and record beam width and deviation.
+  It uses Python script to calculate emittance based on this information.
+  
+  
+  
+===
+
+{Development}
+
+  Resources:
+  
+  * {{{./apidocs/org/scictrl/csshell/epics/server/application/EmittanceScanApplication.html}org.scictrl.csshell.epics.server.application.EmittanceScanApplication}} - main application class.
+  
+  * {{{./apidocs/org/scictrl/csshell/mp/EmittanceCalculator.html}org.scictrl.csshell.python.EmittanceCalculator}} - runs Python script class and interprates results.
+   
+  * {{{./apidocs/org/scictrl/csshell/mp/PythonRunner.html}org.scictrl.csshell.python.PythonRunner}} - general purpose task runner for running Python script from Java.
+   
+  * {{{./apidocs/org/scictrl/csshell/epics/server/test/EmittanceCalculatorTest.html}org.scictrl.csshell.epics.server.test.EmittanceCalculatorTest}} - test class, can run simple Python information script and reference measurements.
+
+  * {{{https://scm.ibpt.kit.edu/scm/svn/flute/controls/java/FLUTE-JavaCommon/trunk/src/test/config/Python}FLUTE-JavaCommon/trunk/src/test/config/Python}} - Python scripts and resources, used by test classes. 
+  

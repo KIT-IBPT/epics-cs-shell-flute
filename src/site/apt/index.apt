@@ -1,0 +1,50 @@
+                ------
+                FLUTE CosntrolSystem Shell Extensions
+                ------
+                ------
+                2023
+           
+           
+  Contents
+
+%{toc|section=2|fromDepth=1|toDepth=3}
+%{toc|section=3|fromDepth=1|toDepth=3}
+
+                
+===
+
+{Introduction}
+
+  For FLUTE Java application bundle CSShell for EPICS has been extended from 
+  base classes defines in main project in KARA repository.
+  
+  
+  
+===
+
+{Server Modules}
+
+  Below is list of server modules developed for FLUTE accelerator.
+  
+  Full information is in {{{./modules.html}Modules}} document.
+  
+* {Records}
+
+  Record specific to FLUTE, a record provides single EPICS PV, can be configured and can connect to other PVs.
+  
+* {Modular Applications}
+
+  Application module is more complex then Record. It is confibured trough XML, it can connect to several PVs to get data, 
+  it can provide several PVs as means of controlling the application or providing it's results. 
+
+
+===
+
+* {Other Servers and Applications}
+
+  Other servers which are hosted by EPICS Java installation bundle and consist of more elements than just Record or Application. 
+  
+  * {{{./emittance.html}Emittance Measurement Application}}
+    
+  
+  

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="server.xsd">
+
+	<server name="default">
+		<management>
+			<name>A:${host}:SoftServer:${server}</name>
+			<shutdown>:shutdown1</shutdown>
+			<ping>:ping1</ping>
+			<list>:list1</list>
+		</management>
+		
+		<group name="default" path="A:TEST:Operation:01:">
+
+			<record>
+				<name>Mode</name>
+				<type>DBR_ENUM</type>
+				<count>1</count>
+				<enumLabels>Shutdown,Laser Operation,RF Operation,Beam Operation</enumLabels>
+				<processor instance="org.scictrl.csshell.epics.server.processor.MemoryValueProcessor">
+					<value>0</value>
+				</processor>
+			</record>
+      <record>
+        <name>BeamMode</name>
+        <type>DBR_ENUM</type>
+        <count>1</count>
+        <enumLabels>No Beam,Machine Development,Beam Experiments,THz Generation</enumLabels>
+        <processor instance="org.scictrl.csshell.epics.server.processor.MemoryValueProcessor">
+          <value>0</value>
+        </processor>
+      </record>
+			<record>
+				<name>MailNotify</name>
+				<processor instance="org.scictrl.csshell.epics.server.processor.ModeNotifyProcesssor">
+				  <inputs>
+				    <mode>${path}Mode</mode>
+				    <beamMode>${path}BeamMode</beamMode>
+				  </inputs>
+				  <mail>
+				    <!-- message to field definition (can be more than one, separated by commas) -->
+            <message.to>MA-Orbitcorrection@ANKA.kit.edu</message.to>
+            <!-- message from field definition -->
+            <message.from>nigel.smale@kit.edu</message.from>
+            <!-- There are three tags that can be used in the subject and body of the email.
+             !   These are:
+             !    - ${time}      : this tag is substituted with time information formatted as defined by message.timeformat
+             !    - ${message}    : this tag is substituted with the message set to the MailHandler
+             !    - ${debug}    : this tag is substituted with the the additional technical details set to MailHandler -->
+             
+            <!-- message subject field definition -->
+            <message.subject>FLUTE operation mode update ${time}</message.subject>
+            <!-- message body definition
+             !   The body text needs to stay in one line. Line breaks can be inserted by: \n -->
+            <message.body>FLUTE operation mode is: ${mode}\nFLUTE beam mode is: ${beamMode}\n\nThis is automatic generated message, do not reply.</message.body>
+            <!-- message time format definition
+             !   If the ${time} tag is found in message.subject or message.body, then it is replaced by
+             !   time information formatted as message.timeformat definition specifies.
+             !   For additional info on time format definition see SimpleDateFormat in JavaDoc. -->
+            <message.timeformat>dd.MM.yyyy 'at' HH:mm:ss</message.timeformat>
+
+            <!-- smtp host server -->
+            <mail.smtp.host>smtp.kit.edu</mail.smtp.host>
+            <!-- smtp port -->
+            <mail.smtp.port>25</mail.smtp.port>
+            <!-- smtp authentication -->
+            <mail.smtp.auth>false</mail.smtp.auth>
+            <!-- smtp use tls -->
+            <mail.smtp.starttls.enable>false</mail.smtp.starttls.enable>
+            <!-- mail user -->
+            <mail.user>nigel.smale@kit.edu</mail.user>
+            <!-- mail password -->
+            <mail.password></mail.password>
+            <!-- optional mail debug (prints debug information to standard output) -->
+            <mail.debug>true</mail.debug>
+
+            <!-- optional mail debug , dumps message to system out instead of sending it out -->
+            <message.dump>true</message.dump>
+				  </mail>
+				</processor>
+			</record>
+
+		</group>
+
+		
+	</server>
+
+</config>

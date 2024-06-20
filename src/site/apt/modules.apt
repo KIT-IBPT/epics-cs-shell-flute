@@ -1,0 +1,1020 @@
+                ------
+                FLUTE CosntrolSystem Shell Extensions
+                ------
+                ------
+                2023
+           
+           
+  <<Contents>>
+
+%{toc|section=0|fromDepth=1|toDepth=3}
+
+                
+===
+
+{Server Modules}
+
+  Below is list of server modules developed for FLUTE accelerator.
+  
+
+===
+
+* {Records}
+
+  Record specific to FLUTE, a record provides single EPICS PV, can be configured and can connect to other PVs.
+
+  Records are implemented by org.scictrl.csshell.epics.server.Record which uses an instance of org.scictrl.csshell.epics.server.ValueProcessor to process values.
+  Most value processor are inherited from org.scictrl.csshell.epics.server.processor.MemoryValueProcessor.
+
+
+~~~~~ RECORD ~~~~~
+~~
+~~  JDoocsValueProcessor
+~~
+
+===
+
+**  {JDoocsValueProcessor}
+
+  JDoocsValueProcessor class, two directional gateway that translates JDOOCS control system remote property values to EPICS PV values. 
+  Connects to JDOCS remote channel and exports corresponding EPICS channel with configured PV.
+  EPICS PV can be read-only or writable.
+
+  <p>ENSHOST property value must be set either as system property on level of system environment or system properties in order to find JDOOCS values.</p>
+  
+  Class: {{{./apidocs/org/scictrl/csshell/epics/server/jdoocs/JDoocsValueProcessor.html}org.scictrl.csshell.epics.server.jdoocs.JDoocsValueProcessor}}
+
+*** Configuration Parameters
+
+  This record supports following parameters in addition to the parameters inherited from org.scictrl.csshell.epics.server.processor.MemoryValueProcessor and org.scictrl.csshell.epics.server.Record.
+
+*--+--+--*--*--*
+|| XML parameter || Description || Value Type || Required || Default value ||
+*--+--+--*--*--*
+| \<demo\> | Puts record in DEMo mode, no connections or calls are made to JDOOCS. | boolean | no | false |
+*--+--+--*--*--*
+| \<link\> | JDOOCS remote property name. | JDOOCS link string | yes | none |
+*--+--+--*--*--*
+| \<writable\> | Enables EPICS value to be sent to JDOOCS link. | boolean | no | false |
+*--+--+--*--*--*
+
+
+*** Example configuration
+
+---
+<server name="ModeMailTest">
+  <group name="LLRF" path="F:RF:LLRF:02:">
+    <group name="GUN" path="Gun:">
+      <record>
+        <name>Ctrl:Ampl</name>
+        <type>DBR_DOUBLE</type>
+        <units>V</units>
+        <precision>2</precision>
+        <description>Output amplitude</description>
+        <processor instance="org.scictrl.csshell.epics.server.jdoocs.JDoocsValueProcessor">
+          <writable>true</writable>
+          <trigger>100</trigger>
+          <link>FLUTE.RF/LLRF.CONTROLLER/CTRL.GUN/SP.AMPL</link>
+        </processor>
+      </record>
+    </group>
+  </group>
+</server>
+---
+
+
+
+
+~~~~~ RECORD ~~~~~
+~~
+~~  SWRValueProcessor
+~~
+
+===
+
+**  {ModeNotifyProcesssor}
+
+  ModeNotifyProcesssor forwards mail to predefined users when FLUTe mode is changed.
+
+  Status: ALPHA, not finished, not tested
+
+  Class: {{{./apidocs/org/scictrl/csshell/epics/server/processor/ModeNotifyProcesssor.html}org.scictrl.csshell.epics.server.processor.ModeNotifyProcesssor}}
+
+*** Configuration Parameters
+
+*--+--+--*--*--*
+|| XML parameter || Description || Value Type || Required || Default value ||
+*--+--+--*--*--*
+| \<inputs\>\<mode\> | PV name for operation mode record | PV string | yes | none |
+*--+--+--*--*--*
+| \<inputs\>\<beamMode\> | PV name for beam mode record | PV string | yes | none |
+*--+--+--*--*--*
+
+
+*** Example configuration
+
+---
+<server name="ModeMailTest">
+  <group name="ModeMail" path="F:TEST:Mail:">
+    <record>
+      <name>01</name>
+      <processor instance="org.scictrl.csshell.epics.server.processor.ModeNotifyProcesssor">
+        <inputs>
+          <mode>F:GL:Operation:Mode</mode>
+          <beamMode>F:GL:Operation:BeamMode</beamMode>
+        </inputs>
+      </processor>
+    </record>
+  </group>
+</server>
+---
+
+
+
+
+~~~~~ RECORD ~~~~~
+~~
+~~  SWRValueProcessor
+~~
+
+===
+
+** {SWRValueProcessor}
+
+  SWRValueProcessor calculates SWR ratio between forward and reflected power.
+
+  Class: {{{./apidocs/org/scictrl/csshell/epics/server/processor/SWRValueProcessor.html}org.scictrl.csshell.epics.server.processor.SWRValueProcessor}}
+
+*** Value Calculation
+
++--
+
+  if power:
+              ( 1 + SQRT (reflected/forward) ) 
+    result =  --------------------------------
+              ( 1 - SQRT (reflected/forward) )
+  
+  if amplitude (not power):
+              ( 1 + reflected/forward ) 
+    result =  -------------------------
+              ( 1 - reflected/forward )
+
++--
+
+  Where: 
+  
+   * if reflected or forward  less then minValue, then result is invalid
+
+   * if <<<SQRT (reflected/forward)>>> or <<<( 1 - SQRT (reflected/forward) )>>> or <<<reflected/forward>>> or <<<( 1 - reflected/forward )>>> is less then zeroValue, then result is invalid
+
+  After result has been found invalid, then for 10 seconds last good value is returned, if after this time result is still invalid, then invalid CA alarm is reported.   
+
+
+*** Configuration Parameters
+
+*--+--+--*--*--*
+|| XML parameter || Description || Value Type || Required || Default value ||
+*--+--+--*--*--*
+| \<fwdPV\> | PV name for forward power record | PV string | yes | none |
+*--+--+--*--*--*
+| \<refPV\> | PV name for reflected power record | PV string | yes | none |
+*--+--+--*--*--*
+| \<power\> | If true (default) then inputs are in power and SQRT is applied to ration, otherwise is amplitude and no SQRT. | boolean | no | true |
+*--+--+--*--*--*
+| \<minValue\> | minimal input value, when power is below this value, then returned value is marked as invalid. | double | no | 0.01 |
+*--+--+--*--*--*
+| \<zeroValue\> | minimal value to be considered not zero, in formulas divisions it made only with values higher than this, if less, then returned value is marked as invalid. | double | no | 0.0001 |
+*--+--+--*--*--*
+
+*** Example configuration
+
+---
+<server name="AppsDoocs">
+  <group name="LLRF" path="F:RF:LLRF:02:">
+    <record>
+      <name>Gun:SWR</name>
+      <precision>2</precision>
+      <processor instance="org.scictrl.csshell.epics.server.processor.SWRValueProcessor">
+        <fwdPV>${path}Gun:WGFwd:Power:Rdb</fwdPV>
+        <refPV>${path}Gun:WGRefl:Power:Rdb</refPV>
+      </processor>
+    </record>
+  </group>
+</server>
+---
+
+===
+
+* {Applications}
+
+  Application module is more complex then Record. It is confibured trough XML, it can connect to several PVs to get data, 
+  it can provide several PVs as means of controlling the application or providing it's results. 
+
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {ArrayDumpApplication}
+
+  ArrayDumpApplication monitors input PV array record, and dumps array values into file, 
+  if any value in array exceeds threshold value, configurable by PV.
+  
+  Files are stored into directory provided with dataDir XML parameter and file names have prefix 'ArrayDump-'. 
+  When dataDir contains more generated files than maxFiles parameter specifies, oldest files are deleted until 
+  file number falls below max files limit.
+
+  Class: {{{./apidocs/org/scictrl/csshell/epics/server/application/ArrayDumpApplication.html}org.scictrl.csshell.epics.server.application.ArrayDumpApplication}}
+
+*** Configuration Parameters
+
+*--+--+--*--*--*
+|| XML parameter || Description || Value Type || Required || Default value ||
+*--+--+--*--*--*
+| \<input\> | PV name for input record, must be array record | PV string | yes | none |
+*--+--+--*--*--*
+| \<treshold\> | threshold value, above which array is dumped to file | decimal | no | 1.0 |
+*--+--+--*--*--*
+| \<maxFiles\> | maximal number generated filed, old files are removed if exceeded. | integer | no | 100 |
+*--+--+--*--*--*
+| \<dataDir\> | location of generated files. | local dir, string | yes | none |
+*--+--+--*--*--*
+
+
+*** Provided PVs
+
+  Application provides PVs with following suffixes:
+
+*--+--+--*
+|| PV Suffix || Description || Value Type ||
+*--+--+--*
+| <<<:Peak>>> | peak value of last received array | decimal |
+*--+--+--*
+| <<<:Treshold>>> | threshold value for array, array is dumped to file if exceeded. | decimal |
+*--+--+--*
+| <<<:PV>>> | String with PV name of input record. | string |
+*--+--+--*
+| <<<:Dir>>> | Directory to which array dump files are saved. | string |
+*--+--+--+
+
+*** Example configuration
+
+---
+<server name="Aux">
+  <group name="Global Misc" path="F:GL:">
+    <group name="array_templ" template="true">
+      <application instance="org.scictrl.csshell.epics.server.application.ArrayDumpApplication">
+        <name>ArrayDump:${id}</name>
+        <input>F:RF:LLRF:01:${pv}</input>
+        <maxFiles>1000</maxFiles>
+        <treshold>1.0</treshold>
+        <dataDir>/home/fluteop/smbshare/Controlsystem/ArrayDump</dataDir>
+      </application>
+    </group>
+    <group><substitutions><id>01</id><pv>GunWG:Ref:Amplitude:Samples</pv></substitutions><insert>array_templ</insert></group>
+  </group>
+</server>
+---
+
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {BeamDumpApplication}
+
+  BeamDumpApplication stores image (of a beam) into files on drive on event from tirgger PV called drops. 
+  
+  Image is stored as an array, additionally there is information of timestamp and of width and height of image.
+
+  Files are stored into directory provided with dataDir XML parameter and file names have prefix 'BeamDump-'. 
+  When dataDir contains more generated files than maxFiles parameter specifies, oldest files are deleted until 
+  file number falls below max files limit.
+  
+  Class: {{{./apidocs/org/scictrl/csshell/epics/server/application/BeamDumpApplication.html}org.scictrl.csshell.epics.server.application.BeamDumpApplication}}
+
+*** Configuration Parameters
+
+*--+--+--*--*--*
+|| XML parameter || Description || Value Type || Required || Default value ||
+*--+--+--*--*--*
+| \<dropsPV\> | PV name for trigger record, triggers image dump | PV string | yes | none |
+*--+--+--*--*--*
+| \<imageHeightPV\> | PV name for record with image height | PV string | yes | none |
+*--+--+--*--*--*
+| \<imageWidthPV\> | PV name for record with image width | PV string | yes | none |
+*--+--+--*--*--*
+| \<imagePV\> | PV name for record with array containing image | PV string | yes | none |
+*--+--+--*--*--*
+| \<maxFiles\> | maximal number generated filed, old files are removed if exceeded. | integer | no | 100 |
+*--+--+--*--*--*
+| \<dataDir\> | location of generated files. | local dir, string | yes | none |
+*--+--+--*--*--*
+
+
+*** Provided PVs
+
+  Application provides PVs with following suffixes:
+
+*--+--+--*
+|| PV Suffix || Description || Value Type ||
+*--+--+--*
+| <<<:Enabled>>> | enables/disables the application | 0,1 as byte |
+*--+--+--*
+| <<<:Last:Image>>> | last saved image. | pixels as integer array  |
+*--+--+--*
+| <<<:Last:Time>>> | last saved image timestamp. | UTC as long |
+*--+--+--*
+| <<<:Last:Time:Str>>> | last saved image timestamp as human friendly string. Formatted ISO date-time, such as '2011-12-03T10:15:30'. | string |
+*--+--+--*
+| <<<:Dir>>> | Directory to which array dump files are saved. | string |
+*--+--+--+
+
+*** Example configuration
+
+---
+<server name="Aux">
+  <group name="Global Misc" path="F:GL:">
+    <application instance="org.scictrl.csshell.epics.server.application.BeamDumpApplication">
+      <name>BeamDump:01</name>
+      <dropsPV>F:RF:LLRF:01:Counter:Drops1s</dropsPV>
+      <imageHeightPV>F:GL:Python:03:DiagCam:ImgHeight</imageHeightPV>
+      <imageWidthPV>F:GL:Python:03:DiagCam:ImgWidth</imageWidthPV>
+      <imagePV>F:GL:Python:03:DiagCam:Image_Sum</imagePV>
+      <maxFiles>1000</maxFiles>
+      <dataDir>/home/fluteop/smbshare/Controlsystem/BeamDump</dataDir>
+    </application>
+  </group>
+</server>
+---
+
+~~~~~ APPLICATION ~~~~~
+~~
+~~  BeamScanApplication
+~~
+
+===
+
+** {BeamScanApplication}
+
+  BeamScanApplication scans the beam with four control values: power, phase, solenoid magnet and bending magnet.
+  It records beam position and shape and filters and averages the beam values.
+  Values with Q below configured threshold are discarded.
+  
+  Four parameters, which are beeing scannes: Power, Phase, Solenoid, Bend, have own set of scan properties and control PVs, 
+  which are being provided by org.scictrl.csshell.epics.server.application.ScanApplication, that is embedded in this application.
+  
+  Class: {{{./apidocs/org/scictrl/csshell/epics/server/application/BeamScanApplication.html}org.scictrl.csshell.epics.server.application.BeamScanApplication}}
+
+*** Configuration Parameters
+
+*--+--+--*--*--*
+|| XML parameter || Description || Value Type || Required || Default value ||
+*--+--+--*--*--*
+| \<Power\>\<precision\>, \<Phase\>\<precision\>, \<Solenoid\>\<precision\>, \<Bend\>\<precision\> | precision for 4 scan modules, determines when scan value is close enough to target value. | double | no | 0.000001 |
+*--+--+--*--*--*
+| \<Power\>\<setpointPV\>, \<Phase\>\<setpointPV\>, \<Solenoid\>\<setpointPV\>, \<Bend\>\<setpointPV\> | PV name for corresponding record that is being scanned. | PV string | yes | none |
+*--+--+--*--*--*
+| \<Power\>\<setpointCmdPV\>, \<Phase\>\<setpointCmdPV\>, \<Solenoid\>\<setpointCmdPV\>, \<Bend\>\<setpointCmdPV\> | PV name for record that is necessary to be set after scan value has been set. Some devices need to apply value after has been set, optional depending on device. | PV string | no | none |
+*--+--+--*--*--*
+| \<beamSpotPv\> | PV for beam spot measurement device, expected device and format is {{{./apidocs/org/scictrl/csshell/epics/server/application/BeamSpotApplication.html}org.scictrl.csshell.epics.server.application.BeamSpotApplication}} | PV device prefix string | yes | F:GL:BeamSpot:01 |
+*--+--+--*--*--*
+| \<measurementWait\> | wait time between beam measurements. | ms as long | no | 10000 |
+*--+--+--*--*--*
+
+
+*** Provided PVs
+
+  Application provides PVs with following suffixes:
+
+*--+--+--*
+|| PV Suffix || Description || Value Type ||
+*--+--+--*
+| <<<:Power:...>>>, <<<:Phase:...>>>, <<<:Solenoid:...>>>, <<<:Bend:...>>> | Access to embedded scanning tools PVs is provided by org.scictrl.csshell.epics.server.application.ScanApplication. | double |
+*--+--+--*
+| <<<:Cmd:Start>>> | Starts scanning task. Setting 1 triggers command. | byte, 1 triggers command |
+*--+--+--*
+| <<<:Cmd:Stop>>> | Stops scanning task. | byte, 1 triggers command |
+*--+--+--*
+| <<<:Meas:Last>>> | Last beam measurement. | Array with measurements |
+*--+--+--*
+| <<<:Meas:Peak>>> | Beam measurement at peak beam, that is largest beam area. | Array with measurements |
+*--+--+--*
+| <<<:Status>>> | Scanning status. | Enum with states: READY, SCANNING, ERROR |
+*--+--+--*
+| <<<:Status:Progress>>> | Scanning progress | % as double |
+*--+--+--*
+| <<<:Status:Remaining>>> | Estimated remaining time of scan | human friendly time format as string |
+*--+--+--*
+| <<<:Status:Scanning>>> | Boolean flag indicating scanning in progress. | 0,1 as byte |
+*--+--+--*
+| <<<:Wait>>> | wait time between beam measurements | 0 to 1000 s as double |
+*--+--+--*
+
+
+*** Example configuration
+
++--
+<server name="Aux">
+  <group name="BeamScan" path="F:GL:BeamScan:">
+    <application instance="org.scictrl.csshell.epics.server.application.BeamScanApplication">
+      <name>01</name>
+      <Power>
+        <setpointPV>F:RF:LLRF:01:Control:Power</setpointPV>
+        <precision>0.0001</precision>
+      </Power>
+      <Phase>
+        <setpointPV>F:RF:LLRF:01:Control:Phase</setpointPV>
+        <precision>0.0001</precision>
+      </Phase>
+      <Solenoid>
+        <setpointPV>F:INJ-1:PS:MSol-01:Current:Setpoint</setpointPV>
+        <precision>0.0001</precision>
+      </Solenoid>
+      <Bend>
+        <setpointPV>F:INJ-1:PS:MB-01:Current:Setpoint</setpointPV>
+        <precision>0.0001</precision>
+      </Bend>
+      <beamSpotPv>F:GL:BeamSpot:01</beamSpotPv>
+      <measurementWait>10000</measurementWait>
+    </application>      
+  </group>
+</server>
++--
+
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {BeamSpotApplication}
+
+  BeamSpotApplication connects server with direct beam parameters, then filters and averages them and provides summary data. Measurements with Q below threshold are discarded as unreliable.
+  
+  Class: {{{./apidocs/org/scictrl/csshell/epics/server/application/BeamSpotApplication.html}org.scictrl.csshell.epics.server.application.BeamSpotApplication}}
+
+*** Configuration Parameters
+
+*--+--+--*--*--*
+|| XML parameter || Description || Value Type || Required || Default value ||
+*--+--+--*--*--*
+| \<count\> | number of measurements to be taken into averaging. | integer | yes | 1 |
+*--+--+--*--*--*
+| \<findBeamPv\> | PV for automatic beam recognition by frame grabber.  | PV string | yes | F:GL:Python:01:DiagCam:Do_ROI |
+*--+--+--*--*--*
+| \<inputPvs\>\<chi2_h\> | input PV for chi square in H | PV string | yes | none |
+*--+--+--*--*--*
+| \<inputPvs\>\<chi2_v\> | input PV for chi square in V | PV string | yes | none | 
+*--+--+--*--*--*
+| \<inputPvs\>\<fwhm_h\> | input PV for FWHM in H | PV string | yes | none |
+*--+--+--*--*--*
+| \<inputPvs\>\<fwhm_v\> | input PV for FWHM in V | PV string | yes | none |
+*--+--+--*--*--*
+| \<inputPvs\>\<pos_h\> | input PV for position in H | PV string | yes | none |
+*--+--+--*--*--*
+| \<inputPvs\>\<pos_v\> | input PV for position in V | PV string | yes | none |
+*--+--+--*--*--*
+| \<inputPvs\>\<size_h\> | input PV for size in H | PV string | yes | none | 
+*--+--+--*--*--*
+| \<inputPvs\>\<size_v\> | input PV for size in V | PV string | yes | none | 
+*--+--+--*--*--*
+| \<laserSwitchPv\> | PV for switching on/off the laser. | PV string | yes | F:LAS:Timing:01:PulsePicker:Enabled |
+*--+--+--*--*--*
+| \<range\>\<area\> | limit for acceptable beam spot area size. | double | yes | 0.1 |
+*--+--+--*--*--*
+| \<range\>\<center\> | limit for acceptable position range center. | double | yes | 0.1 |
+*--+--+--*--*--*
+| \<range\>\<chi2_min\> | lower limit for acceptable Chi square. | double | yes | 0.0 |
+*--+--+--*--*--*
+| \<range\>\<chi2_max\> | upper limit for acceptable Chi square. | double | yes | 1.0 |
+*--+--+--*--*--*
+| \<range\>\<deviation\> | limit for acceptable averaging deviation. | double | yes | 0.1 |
+*--+--+--*--*--*
+| \<range\>\<h_min\> | lower limit for acceptable position range in H. | double | yes | -8.0 |
+*--+--+--*--*--*
+| \<range\>\<h_max\> | upper limit for acceptable position range in H. | double | yes | 8.0 |
+*--+--+--*--*--*
+| \<range\>\<v_min\> | lower limit for acceptable position range in V. | double | yes | -8.0 |
+*--+--+--*--*--*
+| \<range\>\<v_max\> | upper limit for acceptable position range in V. | double | yes | 8.0 |
+*--+--+--*--*--*
+| \<takeBackgroundPv\> | PV for taking fresh screen background for background substractions. | PV string | yes | F:GL:Python:01:DiagCam:Take_New_BG |
+*--+--+--*--*--*
+| \<takeBackgroundBusyPv\> | PV for signal notifying frame grabber is bussy with backgroudn measurement. | PV string | yes | F:GL:Python:01:DiagCam:BG_proc |
+*--+--+--*--*--*
+| \<time_window\> | only calculate averages, if timestamps of received values are within this time window | ms as long | yes | 500 |
+*--+--+--*--*--*
+
+
+*** Provided PVs
+
+  Application provides PVs with following suffixes:
+
+*--+--+--*
+|| PV Suffix || Description || Value Type ||
+*--+--+--*
+| <<<:Area>>> | Averaged beam spot area. | mm^2 as double | 
+*--+--+--*
+| <<<:Area:Min>>> | minimal beam spot area out of averaged. | mm^2 as double | 
+*--+--+--*
+| <<<:Area:Std>>> | STD for beam spot area. | mm^2 as double | 
+*--+--+--*
+| <<<:Count>>> | Averaging count. | double | 
+*--+--+--*
+| <<<:Chi2:H>>> | Maximal Chi square in horizontal. | double | 
+*--+--+--*
+| <<<:Chi2:V>>> | Maximal Chi square in vertical. | double | 
+*--+--+--*
+| <<<:Cmd:BgTake>>> | Command to take beam background measurement. | 1 triggers command | 
+*--+--+--*
+| <<<:Data>>> | Array with combined essential data. see {@link BeamSpotData} for field descriptions | array | 
+*--+--+--*
+| <<<:Deviation>>> | Deviation of averages. | double | 
+*--+--+--*
+| <<<:Fwhm:H>>> | Averaged FWHM square in horizontal. | double | 
+*--+--+--*
+| <<<:Fwhm:V>>> | Averaged FWHM square in vertical. | double | 
+*--+--+--*
+| <<<:Pos:H>>> | Averaged position in horizontal. | mm as double | 
+*--+--+--*
+| <<<:Pos:H:Std>>> | STD for horizontal position. | mm as double | 
+*--+--+--*
+| <<<:Pos:V>>> | Averaged position vertical. | mm as double | 
+*--+--+--*
+| <<<:Pos:V:Std>>> | STD for vertical position. | mm as double | 
+*--+--+--*
+| <<<:Range:Area>>> | limit for acceptable beam spot area size. | mm^2 as double | 
+*--+--+--*
+| <<<:Range:Center>>> | limit for acceptable position range center. | mm as double | 
+*--+--+--*
+| <<<:Range:Deviation>>> | limit for acceptable averaging deviation. | double | 
+*--+--+--*
+| <<<:Range:Hor:Min>>> | lower limit for acceptable position range in H. | mm as double | 
+*--+--+--*
+| <<<:Range:Hor:Max>>> | upper limit for acceptable position range in H. | mm as double | 
+*--+--+--*
+| <<<:Range:Ver:Min>>> | lower limit for acceptable position range in V. | mm as double | 
+*--+--+--*
+| <<<:Range:Ver:Max>>> | upper limit for acceptable position range in V. | mm as double | 
+*--+--+--*
+| <<<:Range:Chi2:Min>>> | lower limit for acceptable Chi square. | double | 
+*--+--+--*
+| <<<:Range:Chi2:Max>>> | upper limit for acceptable Chi square. | double | 
+*--+--+--*
+| <<<:Size:H>>> | Averaged size in horizontal. | mm as double | 
+*--+--+--*
+| <<<:Size:H:Std>>> | STD for horizontal size. | mm as double | 
+*--+--+--*
+| <<<:Size:V>>> | Averaged size in vertical. | mm as double | 
+*--+--+--*
+| <<<:Size:V:Std>>> | STD for vertical size. | mm as double | 
+*--+--+--*
+| <<<:Status:BgBusy>>> | Busy taking background measurement. | status bit as byte | 
+*--+--+--*
+| <<<:Status:Centred>>> | Beam position centred on 0. | status bit as byte | 
+*--+--+--*
+| <<<:Status:FitGood>>> | Beam gauss fit chi square below threshold. | status bit as byte | 
+*--+--+--*
+| <<<:Status:InRange>>> | Beam position within range window. | status bit as byte | 
+*--+--+--*
+| <<<:Status:Small>>> | Beam area below threshold. | status bit as byte | 
+*--+--+--*
+| <<<:Status:Stable>>> | Beam position reading stable. | status bit as byte | 
+*--+--+--*
+| <<<:Status:Valid>>> | Beam position valid. | status bit as byte | 
+*--+--+--*
+
+
+
+*** Example configuration
+
+---
+<server name="Main">
+  <group name="BeamSpot" path="F:GL:BeamSpot:">
+    <application instance="org.scictrl.csshell.epics.server.application.BeamSpotApplication">
+      <name>01</name>
+      <count>10</count>
+      <timeWindow>500</timeWindow>
+      <inputPvs>
+        <size_h>F:GL:Python:01:DiagCam:GAUSS:SIGMA:HOR</size_h>
+        <size_v>F:GL:Python:01:DiagCam:GAUSS:SIGMA:VER</size_v>
+        <pos_h>F:GL:Python:01:DiagCam:GAUSS:MU:HOR</pos_h>
+        <pos_v>F:GL:Python:01:DiagCam:GAUSS:MU:VER</pos_v>
+        <chi2_h>F:GL:Python:01:DiagCam:GAUSS:RCHI:HOR</chi2_h>
+        <chi2_v>F:GL:Python:01:DiagCam:GAUSS:RCHI:VER</chi2_v>
+        <fwhm_h>F:GL:Python:01:DiagCam:FWHM:WID:HOR</fwhm_h>
+        <fwhm_v>F:GL:Python:01:DiagCam:FWHM:WID:VER</fwhm_v>
+      </inputPvs>
+      <range>
+        <h_min>-8.0</h_min>
+        <h_max>8.0</h_max>
+        <v_min>-8.0</v_min>
+        <v_max>8.0</v_max>
+        <center>0.1</center>
+        <deviation>1.2</deviation>
+        <area>0.1</area>
+        <chi2_min>0.0</chi2_min>
+        <chi2_max>2.0</chi2_max>
+      </range>
+    </application>
+  </group>
+</server>
+---
+
+
+
+~~~~~ APPLICATION ~~~~~
+~~
+~~  BPMCalculatorApplication
+~~
+
+===
+
+** {BPMCalculatorApplication}
+
+  TBD
+
+~~~~~ APPLICATION ~~~~~
+~~
+~~  EmittanceScanApplication
+~~
+
+===
+
+** {EmittanceScanApplication}
+
+  EmittanceScanApplication scans the quadruple magnet, measures beam size and then calculates emittance.
+  
+  Scan of quadruple magnet is done in server, measurements are passed to Python script and then presented back trough server to GUI.
+    
+  Measurements are stored on server computer in folder provided trough configuration, usual value is <<</home/fluteop/smbshare/Controlsystem/EmittanceScan/data>>>. 
+  
+  Class: {{{./apidocs/org/scictrl/csshell/epics/server/application/EmittanceScanApplication.html}org.scictrl.csshell.epics.server.application.EmittanceScanApplication}}
+
+*** Configuration Parameters
+
+*--+--+--*--*--*
+|| XML parameter || Description || Value Type || Required || Default value ||
+*--+--+--*--*--*
+| \<beamSpotPv\> | PV for beam spot measurement device, expected device and format is {{{./apidocs/org/scictrl/csshell/epics/server/application/BeamSpotApplication.html}org.scictrl.csshell.epics.server.application.BeamSpotApplication}} | PV device prefix string | yes | F:GL:BeamSpot:01 |
+*--+--+--*--*--*
+| \<dataDir\> | Directory where measurements are stored. | directory path string | yes | <<<\<confih home\>/data>>> |
+*--+--+--*--*--*
+| \<enableBackgroundPv\> | Enables/disables background substraction. | PV string | yes | F:GL:Python:01:DiagCam:Subt_BG |
+*--+--+--*--*--*
+| \<laserSwitchPv\> | Laser switching On/Off. | PV string | yes | F:LAS:Timing:01:PulsePicker:Enabled |
+*--+--+--*--*--*
+| \<measurementWait\> | wait time between beam measurements. | ms as long | no | 10000 |
+*--+--+--*--*--*
+| \<pythonDir\> | Directory where Python scripts are stored. | directory path string | yes | <<<\<confih home\>/Python>>> |
+*--+--+--*--*--*
+| \<pythonScript\> | Python scripts file name, located in Python directory. | file name | yes | <<<emittance.py>>> |
+*--+--+--*--*--*
+| \<Quad\>\<precision\> | precision for scan module, determines when scan value is close enough to target value. | double | no | 0.000001 |
+*--+--+--*--*--*
+| \<Quad\>\<setpointPV\> | PV name for corresponding record that is being scanned. | PV string | yes | none |
+*--+--+--*--*--*
+| \<screenSwitchPv\> | PV for flourecent screen switching control. | PV string | yes | F:GL:Python:01:DiagCam:Camera |
+*--+--+--*--*--*
+| \<takeBackgroundBusyPv\> | Video server is bussy taking background image. | PV string | yes | F:GL:BeamSpot:01:Status:BgBusy |
+*--+--+--*--*--*
+| \<takeBackgroundPv\> | Takes background image for background substraction. | PV string | yes | F:GL:BeamSpot:01:Cmd:BgTake |
+*--+--+--*--*--*
+
+
+*** Provided PVs
+
+  Application provides PVs with following suffixes:
+
+*--+--+--*
+|| PV Suffix || Description || Value Type ||
+*--+--+--*
+| <<<:Cmd:Start>>> | Starts scanning task. Setting 1 triggers command. | byte, 1 triggers command |
+*--+--+--*
+| <<<:Cmd:Stop>>> | Stops scanning task. | byte, 1 triggers command |
+*--+--+--*
+| <<<:Emittance:H>>> | Emittance calculation result, horizontal. | double, mm×mrad |
+*--+--+--*
+| <<<:Emittance:H:Std>>> | Emittance calculation result, horizontal STD. | double, mm×mrad |
+*--+--+--*
+| <<<:Emittance:V>>> | Emittance calculation result, vertical. | double, mm×mrad |
+*--+--+--*
+| <<<:Emittance:V:Std>>> | Emittance calculation result, vertical STD. | double, mm×mrad |
+*--+--+--*
+| <<<:Energy>>> | Manual input for beam energy in MeV, used in emittance calculation. | double, MeV |
+*--+--+--*
+| <<<:Meas:Last>>> | Last beam measurement. | Array with measurements |
+*--+--+--*
+| <<<:Meas:Table>>> | Beam measurement as data table. | String table with measurements |
+*--+--+--*
+| <<<:Opt:EnableBg>>> | Enables background substractions option. | byte |
+*--+--+--*
+| <<<:Opt:LaserOff>>> | Switches laser off at the end option. | byte |
+*--+--+--*
+| <<<:Opt:LaserOn>>> | Switches laser on at the start option. | byte |
+*--+--+--*
+| <<<:Opt:Repeat>>> | How many repeats option. | int |
+*--+--+--*
+| <<<:Opt:TakeBg>>> | Takes new background each measurement option. | byte |
+*--+--+--*
+| <<<:Opt:ValidOnly>>> | Accept only valid measurements | byte |
+*--+--+--*
+| <<<:Quad:...>>> | Access to embedded scanning tools PVs is provided by org.scictrl.csshell.epics.server.application.ScanApplication. |  |
+*--+--+--*
+| <<<:Status>>> | Scanning status. | Enum with states: READY, SETTING_BEND, SCANNING, PAUSED, ERROR |
+*--+--+--*
+| <<<:Status:DataFile>>> | File name on server with measurements. | file name as string |
+*--+--+--*
+| <<<:Status:Progress>>> | Scanning progress | % as double |
+*--+--+--*
+| <<<:Status:Remaining>>> | Estimated remaining time of scan | human friendly time format as string |
+*--+--+--*
+| <<<:Status:Remaining:ms>>> | Estimated remaining time of scan | milliseconds as long |
+*--+--+--*
+| <<<:Status:Repeat>>> | Current repeat count | int |
+*--+--+--*
+| <<<:Status:Scanning>>> | Boolean flag indicating scanning in progress. | 0,1 as byte |
+*--+--+--*
+| <<<:Wait>>> | wait time between beam measurements | 0 to 1000 s as double |
+*--+--+--*
+
+
+*** Example configuration
+
+---
+<server name="Aux">
+    <group name="EmittanceScan" path="F:GL:EmittanceScan:">
+      <application instance="org.scictrl.csshell.epics.server.application.EmittanceScanApplication">
+        <name>01</name>
+        <Quad>
+          <setpointPV>F:INJ-1:PS:MQ-01:Current:Setpoint</setpointPV>
+          <precision>0.0001</precision>
+        </Quad>
+        <beamSpotPv>F:GL:BeamSpot:01</beamSpotPv>
+        <measurementWait>10000</measurementWait>
+        <scanOpt>
+          <inpPrec>0.01</inpPrec>
+          <outPrec>0.01</outPrec>
+        </scanOpt>
+        <dataDir>/home/fluteop/smbshare/Controlsystem/EmittanceScan/data</dataDir>
+      </application>
+    </group>    
+</server>
+---
+
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {EnergyScanApplication}
+
+  TBD
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {FluteCalculator}
+
+  TBD
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {FluteCyclingApplication}
+
+  TBD
+
+
+
+
+~~~~~ APPLICATION ~~~~~
+~~
+~~  ICTApplication
+~~
+
+
+===
+
+** {ICTApplication}
+
+
+  ICTApplication converts charge readout from ADC (BCM - Beam Charge Monitor pickup) to beam charge value.
+
+  Class: {{{./apidocs/org/scictrl/csshell/epics/server/application/ICTApplication.html}org.scictrl.csshell.epics.server.application.ICTApplication}}
+
+*** Value Calculation
+
++--
+
+  Q =  Qcal * 10 ^ ( BCM / Ucal)
+
++--
+
+  Where: <<<Qcal>>> and <<<Ucal>>> are BCM calibration parameters. 
+  
+
+*** Configuration Parameters
+
+*--+--+--*--*--*
+|| XML parameter || Description || Value Type || Required || Default value ||
+*--+--+--*--*--*
+| \<qcal\> | Qcal calibration factor | double | yes | 0.0 |
+*--+--+--*--*--*
+| \<ucal\> | Ucal calibration factor | double | yes | 0.0 |
+*--+--+--*--*--*
+| \<input\> | PV name for BCM readout | PV string | yes | none |
+*--+--+--*--*--*
+
+
+*** Provided PVs
+
+  Application provides PVs with following suffixes:
+
+*--+--+--*
+|| PV Suffix || Description || Value Type ||
+*--+--+--*
+| <<<:Bcm>>> | Forwards value from BCM input PV.  | double |
+*--+--+--*
+| <<<:Q>>> | ICT charge value | double, pC |
+*--+--+--*
+
+
+*** Example configuration
+
+---
+<server name="AppsAux">
+  <group name="ICT" path="F:INJ-1:ICT:">
+    <application instance="org.scictrl.csshell.epics.server.application.ICTApplication">
+      <name>01</name>
+      <input>F:AX:DAQDT:05:1:Wave:32:Sample</input>
+      <qcal>0.00981</qcal>
+      <ucal>0.809113</ucal>
+    </application>
+  </group>
+</server>
+---
+
+
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {LaserApplication}
+
+  TBD
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {MultiScanApplication}
+
+  TBD
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {PowerControlApplication}
+
+  PowerControlApplication controls power output of LLRF DOOCS module from DESY.
+  It wraps raw power control and provides following functionality:
+
+   * Last set power is stored and used when switches on.
+
+   * Power is set only when switched on.
+
+   * Power can be increased only when there is no active VSWR lock.
+
+   * Setting power up ramps power. Setting power down goes in one step directly.
+
+   * Switching off sets raw power output to 0.0 but keeps last setpoint reference. 
+
+   * Switching on ramps raw power output to the last setpoint reference. 
+
+
+  In addition it monitors two VSWR PVs and if any of these exceeds limit value, power is switched off. 
+
+  Class: {{{./apidocs/org/scictrl/csshell/epics/server/application/PowerControlApplication.html}org.scictrl.csshell.epics.server.application.PowerControlApplication}}
+
+*** Configuration Parameters
+
+*--+--+--*--*--*
+|| XML parameter || Description || Value Type || Required || Default value ||
+*--+--+--*--*--*
+| \<swrWGPV\> | PV name for WaveGuide VSWR calculation | PV string | yes | none |
+*--+--+--*--*--*
+| \<swrKlyPV\> | PV name for Klystron VSWR calculation | PV string | yes | none |
+*--+--+--*--*--*
+| \<powerPV\> | PV name for raw DOOCS Power control | PV string | yes | none |
+*--+--+--*--*--*
+
+
+*** Provided PVs
+
+  Application provides PVs with following suffixes:
+
+*--+--+--*
+|| PV Suffix || Description || Value Type ||
+*--+--+--*
+| <<<:Cmd:Off>>> | Command switching off. | byte, 1 triggers command |
+*--+--+--*
+| <<<:Cmd:On>>> | Command switching on. | byte, 1 triggers command |
+*--+--+--*
+| <<<:OffOn>>> | Status and command, switches off or on. | 0 or 1, byte  |
+*--+--+--*
+| <<<:OffOn:Direct>>> | Status and command, switches off or on, bypasses upword power ramp and sets directy. | 0 or 1, byte  |
+*--+--+--*
+| <<<:Set>>> | Intended Power setpoint, it is preserved when switched off. | decimal |
+*--+--+--*
+| <<<:Set:Get>>> | Power setpoint readback, actual output setpoint, goes to 0 when switched off. | decimal |
+*--+--+--*
+| <<<:Set:Sync>>> | Copies setpoint readback to setpoint. | byte, 1 triggers command |
+*--+--+--*
+| <<<:Set:Diff>>> | 1 if setpoint and setpoint readback differ. | byte, 0 or 1 |
+*--+--+--*
+| <<<:Status:Locked>>> | Locked status, bum of both locks. | byte, 0 or 1 |
+*--+--+--*
+| <<<:Status:Kly:Locked>>> | Klystron locked status. | byte, 0 or 1 |
+*--+--+--*
+| <<<:Status:WG:Locked>>> | WaveGuide locked status. | byte, 0 or 1 |
+*--+--+--*
+| <<<:Status:On>>> | On status, 1 if on. | byte, 0 or 1 |
+*--+--+--*
+| <<<:Status:Scanning>>> | Power is being ramped up. | byte, 0 or 1 |
+*--+--+--*
+| <<<:SWR:WG>>> | Provides copy WaveGuide SWR PV value. | decimal |
+*--+--+--*
+| <<<:SWR:WG>>> | Provides copy Klystron SWR PV value. | decimal |
+*--+--+--*
+| <<<:SWR:WG:Limit>>> | VSWG value limit, locks controller if VSWR is higher. | string |
+*--+--+--*
+| <<<:SWR:Kly:Limit>>> | VSWG value limit, locks controller if VSWR is higher. | string |
+*--+--+--+
+
+*** Example configuration
+
+---
+<server name="AppsDoocs">
+  <group name="LLRF" path="F:RF:LLRF:02:">
+    <group name="GUN" path="Gun:">
+      <application instance="org.scictrl.csshell.epics.server.application.PowerControlApplication">
+        <name>Ctrl:Ampl</name>
+        <swrWGPV>${path}SWR:Calc:AVG</swrWGPV>
+        <swrKlyPV>${path}K1:SWR:Calc:AVG</swrKlyPV>
+        <powerPV>${path}Ctrl:Ampl</powerPV>
+      </application>
+    </group>
+  </group>
+</server>
+---
+
+
+
+
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {PowerInterlockApplication}
+
+  TBD
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {PowerSplitterApplication}
+
+  TBD
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {StepFeedbackLoopApplication}
+
+  TBD
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {StepFeedbackLoopApplication2}
+
+  TBD
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {StepFeedbackLoopApplication3}
+
+  TBD
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {StepFeedbackLoopApplication31}
+
+  TBD
+
+~~~~~ APPLICATION ~~~~~
+===
+
+** {StepFeedbackLoopApplication32}
+
+  TBD
+
+  

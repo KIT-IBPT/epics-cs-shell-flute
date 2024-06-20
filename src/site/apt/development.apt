@@ -1,0 +1,22 @@
+                ------
+                Development Guide
+                ------
+                ------
+                2023
+
+
+Overview
+
+  Code is build by Maven built system.
+
+  Some dependencies are in located in project https://scm.ibpt.kit.edu/scm/svn/flute/controls/java/FLUTE-Maven-Repository/trunk so it is advisable to have it in parallel and at least once run command "mvn dependency:resolve" in order to populate local repository with those dependencies.
+
+  To build inside FLUTE network, it is necessary to use repository from FLUTE-Maven-Repository. Instructions can be found here: https://scm.ibpt.kit.edu/scm/svn/flute/controls/java/FLUTE-Maven-Repository/trunk/settings.xml
+
+                
+Building
+
+  <<<mvn javadoc:fix>>> - fix some trivial Javadoc problems.
+
+  <<<mvn site>>> - build this site outside FLUTE network.
+
