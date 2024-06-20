@@ -23,7 +23,42 @@
     <junit-jupiter-api.ver>5.10.1</junit-jupiter-api.ver>
     <!-- Use command line to incluse tests -DskipTests=false -->
     <skipTests>true</skipTests>
+    
+    <csshellLink>https://share.flute.ibpt.kit.edu/smbshare/Controlsystem/Maven/site/csshell/</csshellLink>
+    <fluteCsshellLink>https://share.flute.ibpt.kit.edu/smbshare/Controlsystem/Maven/site/flute-csshell/</fluteCsshellLink>
+    
   </properties>
+
+  <profiles>
+  <profile>
+    <id>github</id>
+    <properties>
+    <csshellLink>https://kit-ibpt.github.io/epics-cs-shell/</csshellLink>
+    <fluteCsshellLink>https://kit-ibpt.github.io/epics-cs-shell-flute/</fluteCsshellLink>
+    </properties>
+    <distributionManagement>
+    <site>
+      <id>github</id>
+      <url>scm:git:ssh://git@github.com/KIT-IBPT/epics-cs-shell-flute.git</url>
+    </site>
+    </distributionManagement>
+    <build>
+    <plugins>
+      <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-scm-publish-plugin</artifactId>
+      <version>3.2.1</version>
+      <configuration>
+        <scmBranch>gh-pages</scmBranch>
+      </configuration>
+      </plugin>
+    </plugins>
+    </build>
+  </profile>
+  </profiles>
+
+
+
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
     <resources>

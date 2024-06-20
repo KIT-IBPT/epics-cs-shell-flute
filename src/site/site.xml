@@ -1,10 +1,10 @@
 <project
-  name="FLUTE - Java Application Server">
+  name="CS-Shell-FLUTE Java Application Server">
   
   <publishDate timezone="CET" />
   
   <bannerLeft>
-    <name>FLUTE - Java Application Server</name>
+    <name>CS-Shell-FLUTE - Java Application Server</name>
   </bannerLeft>
   
   <body>
@@ -16,8 +16,8 @@
       <item name="Javadoc" href="apidocs/index.html" />
     </menu>
     <menu name="Projects">
-      <item name="Java Application Server" href="https://share.flute.ibpt.kit.edu/smbshare/Controlsystem/Maven/site/csshell/" />
-      <item name="FLUTE - Java Application Server" href="https://share.flute.ibpt.kit.edu/smbshare/Controlsystem/Maven/site/flute-csshell/" />
+      <item name="CS-Shell App Server" href="${csshellLink}" />
+      <item name="CS-Shell-FLUTE App Server" href="${fluteCsshellLink}" />
     </menu>
     <menu ref="reports" />
     <menu ref="modules" />
