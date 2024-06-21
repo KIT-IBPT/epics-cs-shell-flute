@@ -346,6 +346,8 @@
 </server>
 ---
 
+
+
 ~~~~~ APPLICATION ~~~~~
 ~~
 ~~  BeamScanApplication
@@ -439,6 +441,7 @@
   </group>
 </server>
 +--
+
 
 
 ~~~~~ APPLICATION ~~~~~
@@ -866,6 +869,136 @@
 ** {MultiScanApplication}
 
   TBD
+
+
+
+~~~~~ APPLICATION ~~~~~
+~~
+~~  PhaseScanApplication
+~~
+
+===
+
+** {PhaseScanApplication}
+
+  PhaseScanApplication scans LLRF Gun Phase and records ICT response. 
+  
+  Then searches for three reference points (or breakpoint):
+  
+    * first high point (local maximum), then
+    
+    * low point (local minimum), then
+    
+    * second high point (absolute maximum).
+
+
+  First reference point provides calculation reference for four workpoints:
+  
+    * Q max
+    
+    * Q / A max
+    
+    * p max
+    
+    * sigma min
+
+
+  Class: {{{./apidocs/org/scictrl/csshell/epics/server/application/PhaseScanApplication.html}org.scictrl.csshell.epics.server.application.PhaseScanApplication}}
+
+*** Configuration Parameters
+
+*--+--+--*--*--*
+|| XML parameter || Description || Value Type || Required || Default value ||
+*--+--+--*--*--*
+| \<dataDir\> | location of generated files. | local dir, string | yes | none |
+*--+--+--*--*--*
+| \<ictPV\> | PV for ICT measurement | PV string | yes | F:INJ-1:ICT:01:Q |
+*--+--+--*--*--*
+| \<measurementWait\> | wait time between beam measurements. | ms as long | no | 10000 |
+*--+--+--*--*--*
+| \<Phase\>\<precision\> | precision for 4 scan modules, determines when scan value is close enough to target value. | double | no | 0.000001 |
+*--+--+--*--*--*
+| \<Phase\>\<setpointPV\> | PV name for corresponding record that is being scanned. | PV string | yes | none |
+*--+--+--*--*--*
+| \<Phase\>\<setpointCmdPV\> | PV name for record that is necessary to be set after scan value has been set. Some devices need to apply value after has been set, optional depending on device. | PV string | no | none |
+*--+--+--*--*--*
+
+
+*** Provided PVs
+
+  Application provides PVs with following suffixes:
+
+*--+--+--*
+|| PV Suffix || Description || Value Type ||
+*--+--+--*
+| <<<:Phase:...>>> | Access to embedded scanning tools PVs is provided by org.scictrl.csshell.epics.server.application.ScanApplication. | double |
+*--+--+--*
+| <<<:Cmd:Calc>>> | Prepared measurements, then calculates reference points and work points. | byte, 1 triggers command |
+*--+--+--*
+| <<<:Cmd:Start>>> | Starts scanning task. Setting 1 triggers command. | byte, 1 triggers command |
+*--+--+--*
+| <<<:Cmd:Stop>>> | Stops scanning task. | byte, 1 triggers command |
+*--+--+--*
+| <<<:Data:Breakpoints>>> | Phase value at reference points (breakpoints: local high, low, abs. high) as result of breakpoint finding algorithm. | array of 3 doubles |
+*--+--+--*
+| <<<:Data:Breakpoints:ICT>>> | ICT value at reference points, corresponding to 3 <<<:Data:Breakpoints>>> points. Useful for chart presentation. | array of 3 doubles |
+*--+--+--*
+| <<<:Data:ICT>>> | ICT value measurements after smoothing filter. | array of doubles |
+*--+--+--*
+| <<<:Data:Workpoints>>> | Phase value at workpoints (Q max, Q / A max, p max, sigma min) as result of calculation. | array of 4 doubles |
+*--+--+--*
+| <<<:Data:Pmax>>> | Phase value at p max workpoint, as in <<<:Data:Workpoints>>>. | double |
+*--+--+--*
+| <<<:Data:Qmax>>> | Phase value at Q max workpoint, as in <<<:Data:Workpoints>>>. | double |
+*--+--+--*
+| <<<:Data:QAmax>>> | Phase value at Q / A max workpoint, as in <<<:Data:Workpoints>>>. | double |
+*--+--+--*
+| <<<:Data:Smin>>> | Phase value at sigma min workpoint, as in <<<:Data:Workpoints>>>. | double |
+*--+--+--*
+| <<<:Data:Workpoints:ICT>>> | ICT value at workpoints, corresponding to 4 <<<:Data:Workpoints>>> points. Useful for chart presentation. | array of 4 doubles |
+*--+--+--*
+| <<<:Meas:ICT>>> | ICT value measurements. | array of doubles |
+*--+--+--*
+| <<<:Meas:Phase>>> | Phase value measurements. | array of doubles |
+*--+--+--*
+| <<<:Status>>> | Scanning status. | Enum with states: READY, SCANNING, ERROR |
+*--+--+--*
+| <<<:Status:Progress>>> | Scanning progress | % as double |
+*--+--+--*
+| <<<:Status:Remaining>>> | Estimated remaining time of scan | human friendly time format as string |
+*--+--+--*
+| <<<:Status:Remaining:ms>>> | Estimated remaining time of scan in milliseconds | long, in milliseconds |
+*--+--+--*
+| <<<:Status:Scanning>>> | Boolean flag indicating scanning in progress. | 0,1 as byte |
+*--+--+--*
+| <<<:Opt:Collapse>>> | Enables averaging of ICT values for same Phase value. |  0,1 as byte |
+*--+--+--*
+| <<<:Opt:Samples>>> | Enables smoothing ICT measurement curve by averaging ICS measurements over this count of neighbor points, reduces statistical fluctuation. |  0,1 as byte |
+*--+--+--*
+| <<<:Opt:Wait>>> | wait before each measurement, in seconds |  double, in seconds |
+*--+--+--*
+
+
+*** Example configuration
+
++--
+<server name="Main">
+  <group name="PhaseScan" path="F:GL:PhaseScan:">
+    <application instance="org.scictrl.csshell.epics.server.application.PhaseScanApplication">
+      <name>01</name>
+      <Phase>
+        <setpointPV>F:RF:LLRF:02:Gun:Ctrl:Phase</setpointPV>
+        <precision>0.0001</precision>
+      </Phase>
+      <ictPV>F:INJ-1:ICT:01:Q</ictPV>
+      <measurementWait>10000</measurementWait>
+      <dataDir>/home/fluteop/smbshare/Controlsystem/EnergyScan/data</dataDir>
+    </application>
+  </group>    
+</server>
++--
+
+
 
 ~~~~~ APPLICATION ~~~~~
 ===

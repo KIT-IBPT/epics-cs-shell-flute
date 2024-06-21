@@ -60,11 +60,14 @@ public class PhaseScanApplication extends AbstractApplication {
 	private static final String MEASUREMENT_ICT =  "Meas:ICT";
 	
 	private static final String DATA_ICT =  		"Data:ICT";
-	private static final String DATA_SAMPLES =		"Data:Samples";
 	private static final String DATA_BREAKPOINTS = 	"Data:Breakpoints";
 	private static final String DATA_WORKPOINTS =  	"Data:Workpoints";
 	private static final String DATA_BREAKPOINTS_ICT = 	"Data:Breakpoints:ICT";
 	private static final String DATA_WORKPOINTS_ICT =  	"Data:Workpoints:ICT";
+	private static final String DATA_Q_MAX =  	"Data:Qmax";
+	private static final String DATA_QA_MAX =  	"Data:QAmax";
+	private static final String DATA_P_MAX =  	"Data:Pmax";
+	private static final String DATA_S_MIN =  	"Data:Smin";
 
 	private static final String CMD_STOP = 		"Cmd:Stop";
 	private static final String CMD_START = 	"Cmd:Start";
@@ -79,7 +82,9 @@ public class PhaseScanApplication extends AbstractApplication {
 	private static final String STATUS_REPEAT = 		"Status:Repeat";
 	private static final String STATUS_ERROR = 			"Status:Error";
 	
-	private static final String OPT_WAIT = 			"Opt:Wait";
+	private static final String OPT_WAIT = 		"Opt:Wait";
+	private static final String OPT_COLLAPSE = 	"Opt:Collapse";
+	private static final String OPT_SAMPLES =	"Opt:Samples";
 
 	final static class Measurement implements Cloneable {
 		public Instant time;
@@ -385,11 +390,14 @@ public class PhaseScanApplication extends AbstractApplication {
 		addRecordOfMemoryValueProcessor(MEASUREMENT_ICT, "Charge measurements", -1000.0, 1000.0, "", (short)2, new double[10000]);
 
 		addRecordOfMemoryValueProcessor(DATA_ICT, "Charge Smoothed", -1000.0, 1000.0, "", (short)2, new double[10000]);
-		addRecordOfMemoryValueProcessor(DATA_BREAKPOINTS, "Breakpoints", -1000.0, 1000.0, "", (short)2, new double[3]);
+		addRecordOfMemoryValueProcessor(DATA_BREAKPOINTS, "Reference points", -1000.0, 1000.0, "", (short)2, new double[3]);
 		addRecordOfMemoryValueProcessor(DATA_WORKPOINTS, "Workpoints", -1000.0, 1000.0, "", (short)2, new double[4]);
 		addRecordOfMemoryValueProcessor(DATA_BREAKPOINTS_ICT, "Breakpoints ICT values", -1000.0, 1000.0, "", (short)2, new double[3]);
 		addRecordOfMemoryValueProcessor(DATA_WORKPOINTS_ICT, "Workpoints ICT values", -1000.0, 1000.0, "", (short)2, new double[4]);
-		addRecordOfMemoryValueProcessor(DATA_SAMPLES, "Smoothing Sample count", 1, 1000, "No.", 1);
+		addRecordOfMemoryValueProcessor(DATA_Q_MAX, "Workpoint Q max", -180.0, 180.0, "", (short)1, 0.0);
+		addRecordOfMemoryValueProcessor(DATA_QA_MAX, "Workpoint Q / A max", -180.0, 180.0, "", (short)1, 0.0);
+		addRecordOfMemoryValueProcessor(DATA_P_MAX, "Workpoint p max", -180.0, 180.0, "", (short)1, 0.0);
+		addRecordOfMemoryValueProcessor(DATA_S_MIN, "Workpoint sigma min", -180.0, 180.0, "", (short)1, 0.0);
 
 		addRecordOfMemoryValueProcessor(STATUS_PROGRESS, "Scanning progress", 0.0, 100.0, "%", (short)2, 0.0);
 		addRecordOfMemoryValueProcessor(STATUS_SCANNING, "Flag indicating scanning in progress", DBRType.BYTE, 0);
@@ -403,13 +411,13 @@ public class PhaseScanApplication extends AbstractApplication {
 		addRecordOfMemoryValueProcessor(CMD_START, "Start scanning task", DBRType.BYTE, 0);
 		addRecordOfMemoryValueProcessor(CMD_CALCULATE, "Calculate results", DBRType.BYTE, 0);
 		
-		addRecordOfMemoryValueProcessor(OPT_WAIT, "Wait for measurement", 0, 1000, "s", 0);
+		addRecordOfMemoryValueProcessor(OPT_WAIT, "Wait for measurement", 0, 1000, "s", 0).setPersistent(true);
+		addRecordOfMemoryValueProcessor(OPT_COLLAPSE, "Collapse same points", DBRType.BYTE, 0).setPersistent(true);
+		addRecordOfMemoryValueProcessor(OPT_SAMPLES, "Smoothing Sample count", 1, 1000, "No.", 5).setPersistent(true);
 		
 		progress= getRecord(STATUS_PROGRESS);
 
 		Record r= getRecord(OPT_WAIT);
-		r.setPersistent(true);
-		
 		if (r.getValueAsInt()==0) {
 			r.setValue((int)(measurementWait/1000.0));
 		} else {
@@ -643,21 +651,29 @@ public class PhaseScanApplication extends AbstractApplication {
 
 	private boolean scanCalc() {
 
-		double[] ictRaw= getRecord(MEASUREMENT_ICT).getValueAsDoubleArray();
 		double[] phase= getRecord(MEASUREMENT_PHASE).getValueAsDoubleArray();
-		
-		double[][] pre= Smoothing.collapseSame(phase, ictRaw);
-		
-		if (pre[0].length!=phase.length) {
-			ictRaw = pre[1];
-			phase = pre[0];
-			getRecord(MEASUREMENT_ICT).setValue(ictRaw);
-			getRecord(MEASUREMENT_PHASE).setValue(phase);
+		double[] ictRaw= getRecord(MEASUREMENT_ICT).getValueAsDoubleArray();
+
+		boolean col= getRecord(OPT_COLLAPSE).getValueAsBoolean();
+		if (col) {
+			double[][] pre= Smoothing.collapseSame(phase, ictRaw);
+			
+			if (pre[0].length!=phase.length) {
+				phase = pre[0];
+				ictRaw = pre[1];
+				getRecord(MEASUREMENT_PHASE).setValue(phase);
+				getRecord(MEASUREMENT_ICT).setValue(ictRaw);
+			}
 		}
 		
-		int samples= (int)(ictRaw.length/100.0);
+		int samples= getRecord(OPT_SAMPLES).getValueAsInt();
 		
-		double[] ictSmooth= Smoothing.smoothAvg(ictRaw, samples);
+		if (samples<1) {
+			samples=1;
+			getRecord(OPT_SAMPLES).setValue(samples);
+		}
+		
+		double[] ictSmooth= samples==1 ? ictRaw : Smoothing.smoothAvg(ictRaw, samples);
 		
 		int[] brkPn= PatternSearch.findBreakpointsHiLoHHi(ictSmooth, 1.0);
 		
@@ -698,10 +714,13 @@ public class PhaseScanApplication extends AbstractApplication {
 		
 		getRecord(DATA_ICT).setValue(ictSmooth);
 		getRecord(DATA_BREAKPOINTS).setValue(brkP);
-		getRecord(DATA_SAMPLES).setValue(samples);
 		getRecord(DATA_WORKPOINTS).setValue(wrkP);
 		getRecord(DATA_BREAKPOINTS_ICT).setValue(brkIct);
 		getRecord(DATA_WORKPOINTS_ICT).setValue(wrkIct);
+		getRecord(DATA_Q_MAX).setValue(wrkP[0]);
+		getRecord(DATA_QA_MAX).setValue(wrkP[1]);
+		getRecord(DATA_P_MAX).setValue(wrkP[2]);
+		getRecord(DATA_S_MIN).setValue(wrkP[3]);
 		
 		return true;
 	}

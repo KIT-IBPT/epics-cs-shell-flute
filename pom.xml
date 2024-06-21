@@ -24,8 +24,9 @@
     <!-- Use command line to incluse tests -DskipTests=false -->
     <skipTests>true</skipTests>
     
+    <csshellSource>https://scm.ibpt.kit.edu/scm/svn/flute/controls/java/FLUTE-JavaCommon/trunk</csshellSource>
     <csshellLink>https://share.flute.ibpt.kit.edu/smbshare/Controlsystem/Maven/site/csshell/</csshellLink>
-    <fluteCsshellLink>https://share.flute.ibpt.kit.edu/smbshare/Controlsystem/Maven/site/flute-csshell/</fluteCsshellLink>
+    <csshellLinkFlute>https://share.flute.ibpt.kit.edu/smbshare/Controlsystem/Maven/site/flute-csshell/</CsshellLinkFlute>
     
   </properties>
 
@@ -33,8 +34,9 @@
   <profile>
     <id>github</id>
     <properties>
-    <csshellLink>https://kit-ibpt.github.io/epics-cs-shell/</csshellLink>
-    <fluteCsshellLink>https://kit-ibpt.github.io/epics-cs-shell-flute/</fluteCsshellLink>
+      <csshellSource>https://github.com/KIT-IBPT/epics-cs-shell-flute</csshellSource>
+      <csshellLink>https://kit-ibpt.github.io/epics-cs-shell/</csshellLink>
+      <csshellLinkFlute>https://kit-ibpt.github.io/epics-cs-shell-flute/</csshellLinkFlute>
     </properties>
     <distributionManagement>
     <site>

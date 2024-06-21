@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class SmoothingTest {
 
 	@Test
-	void test1() {
+	void testAvg1() {
 		
 		double[] data1= {0.0, 0.0, 0.0, 0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		
@@ -50,7 +50,7 @@ class SmoothingTest {
 	}
 
 	@Test
-	void test2() {
+	void testAvg2() {
 		
 		double[] data1= {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0};
 		
@@ -105,4 +105,22 @@ class SmoothingTest {
 		}
 
 	}
+	
+	@Test
+	void testCollapse() {
+		
+		double[] x= {1.0, 2.0, 2.0, 3.0, 4.0, 4.0, 4.0, 5.0, 6.0,  7.0,  8.0,  8.0,  8.0,  8.0,  8.0,  9.0, 10.0, 11.0};
+		double[] y= {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0};
+		
+		double[] rx= {1.0, 2.0, 3.0, 4.0, 5.0, 6.0,  7.0,  8.0,  9.0, 10.0, 11.0};
+		double[] ry= {1.0, 2.5, 4.0, 6.0, 8.0, 9.0, 10.0, 13.0, 16.0, 17.0, 18.0};
+		
+		double[][] r= Smoothing.collapseSame(x, y);
+		
+		assertArrayEquals(rx, r[0], 0.0001);
+		assertArrayEquals(ry, r[1], 0.0001);
+		
+		
+	}
+
 }

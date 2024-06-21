@@ -1,13 +1,20 @@
-<project
-  name="CS-Shell-FLUTE Java Application Server">
+<site 
+  xmlns="http://maven.apache.org/SITE/2.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SITE/2.0.0 https://maven.apache.org/xsd/site-2.0.0.xsd"
+  name="CS-Shell-FLUTE EPICS Application Server">
   
+  <bannerLeft name="CS-Shell-FLUTE EPICS Application Server">
+  </bannerLeft>
+
   <publishDate timezone="CET" />
   
-  <bannerLeft>
-    <name>CS-Shell-FLUTE - Java Application Server</name>
-  </bannerLeft>
-  
   <body>
+
+    <links>
+      <item name="Source repository: ${csshellSource}" href="${csshellSource}" target="_blank" />
+    </links>
+
     <menu name="Overview">
       <item name="Overview" href="index.html" />
       <item name="Modules" href="modules.html" />
@@ -15,12 +22,16 @@
       <item name="Development Guide" href="development.html" />
       <item name="Javadoc" href="apidocs/index.html" />
     </menu>
+
     <menu name="Projects">
       <item name="CS-Shell App Server" href="${csshellLink}" />
-      <item name="CS-Shell-FLUTE App Server" href="${fluteCsshellLink}" />
+      <item name="CS-Shell-FLUTE App Server" href="${csshellLinkFlute}" />
     </menu>
+
     <menu ref="reports" />
+
     <menu ref="modules" />
+
   </body>
   
   <skin>
@@ -29,4 +40,4 @@
     <version>2.0.0-M8</version>
   </skin>
   
-</project>
+</site>

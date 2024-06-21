@@ -328,7 +328,7 @@ public class PowerControlApplication extends AbstractApplication {
 			}
 			
 			if (d<=dd || direct) {
-				cancleScan();
+				cancelScan();
 				try {
 					power.setValueToAll(d);
 				} catch (Exception e) {
@@ -351,9 +351,9 @@ public class PowerControlApplication extends AbstractApplication {
 			
 	}
 	
-	private synchronized void cancleScan() {
+	private synchronized void cancelScan() {
 		if (task!=null) {
-			task.cancle();
+			task.cancel();
 			task=null;
 		}
 		getRecord(STATUS_SCANNING).setValue(0);
@@ -362,7 +362,7 @@ public class PowerControlApplication extends AbstractApplication {
 	private synchronized void scan(double start, double end) {
 		long delay=0L;
 		if (task!=null) {
-			task.cancle();
+			task.cancel();
 			delay=1000L;
 		}
 		getRecord(STATUS_SCANNING).setValue(1);

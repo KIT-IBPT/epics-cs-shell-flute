@@ -89,12 +89,16 @@ public final class Smoothing {
 		List<Double> ay= new ArrayList<Double>(y.length);
 
 		double px=Double.NaN;
-		int c=0;
+		int c=1;
 		int k=-1;
 		
 		for (int i = 0; i < x.length && i < y.length; i++) {
 			double vx= x[i];
 			double vy= y[i];
+			
+			if (vx==0.0 && vy==0.0) {
+				continue;
+			}
 			
 			if (vx==px) {
 				ay.set(k, ay.get(k)+vy);
@@ -110,10 +114,13 @@ public final class Smoothing {
 				k=ax.size()-1;
 			}
 		}
+		if (c>1) {
+			ay.set(k, ay.get(k)/(double)c);
+		}
 		
 		double[][] r= new double[2][ax.size()];
 		
-		for (int i = 0; i < r.length; i++) {
+		for (int i = 0; i < r[0].length; i++) {
 			r[0][i]=ax.get(i);
 			r[1][i]=ay.get(i);
 		}
