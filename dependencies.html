@@ -10,7 +10,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content="Apache Maven Doxia Site Renderer 2.0.0-M13" />
-    <title>Orbit Correction Server – Project Dependencies</title>
+    <title>CS-Shell-FLUTE EPICS Application Server – Project Dependencies</title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-2.0.0-M8.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -20,7 +20,7 @@
     <div class="container-fluid container-fluid-top">
       <header>
         <div id="banner">
-          <div class="pull-left"><div id="bannerLeft"><h1>Orbit Correction Server</h1></div></div>
+          <div class="pull-left"><div id="bannerLeft"><h1>CS-Shell-FLUTE EPICS Application Server</h1></div></div>
           <div class="pull-right"></div>
           <div class="clear"><hr/></div>
         </div>
@@ -29,8 +29,8 @@
           <ul class="breadcrumb">
         <li id="publishDate">Last Published: 2024-06-23<span class="divider">|</span>
 </li>
-          <li id="projectVersion">Version: 2.0</li>
-        <li class="pull-right"><a href="https://github.com/KIT-IBPT/oc-server" target="_blank" class="externalLink">Source repository: https://github.com/KIT-IBPT/oc-server</a></li>
+          <li id="projectVersion">Version: 1.0</li>
+        <li class="pull-right"><a href="https://github.com/KIT-IBPT/epics-cs-shell-flute" target="_blank" class="externalLink">Source repository: https://github.com/KIT-IBPT/epics-cs-shell-flute</a></li>
           </ul>
         </div>
       </header>
@@ -40,6 +40,8 @@
   <ul class="nav nav-list">
    <li class="nav-header">Overview</li>
     <li><a href="index.html">Overview</a></li>
+    <li><a href="modules.html">Modules</a></li>
+    <li><a href="emittance.html">Emittance Measurement</a></li>
     <li><a href="development.html">Development Guide</a></li>
     <li><a href="apidocs/index.html">Javadoc</a></li>
    <li class="nav-header">Projects</li>
@@ -82,29 +84,29 @@
 <th>Type</th>
 <th>Licenses</th></tr>
 <tr class="b">
-<td style="text-align: left;">com.fasterxml.jackson.core</td>
-<td><a class="externalLink" href="https://github.com/FasterXML/jackson-core">jackson-core</a></td>
-<td>2.16.0</td>
-<td>jar</td>
-<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
-<tr class="a">
 <td style="text-align: left;">com.sun.mail</td>
 <td><a class="externalLink" href="http://javaee.github.io/javamail/javax.mail">javax.mail</a></td>
 <td>1.6.2</td>
 <td>jar</td>
 <td><a class="externalLink" href="https://javaee.github.io/javamail/LICENSE">CDDL/GPLv2+CE</a></td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">commons-collections</td>
 <td><a class="externalLink" href="http://commons.apache.org/collections/">commons-collections</a></td>
 <td>3.2.2</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">commons-configuration</td>
 <td><a class="externalLink" href="http://commons.apache.org/configuration/">commons-configuration</a></td>
 <td>1.10</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
+<tr class="a">
+<td style="text-align: left;">commons-io</td>
+<td><a class="externalLink" href="https://commons.apache.org/proper/commons-io/">commons-io</a></td>
+<td>2.15.0</td>
+<td>jar</td>
+<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></td></tr>
 <tr class="b">
 <td style="text-align: left;">commons-lang</td>
 <td><a class="externalLink" href="http://commons.apache.org/lang/">commons-lang</a></td>
@@ -124,42 +126,36 @@
 <td>jar</td>
 <td>-</td></tr>
 <tr class="a">
+<td style="text-align: left;">csshell</td>
+<td>jdoocs</td>
+<td>1.0</td>
+<td>jar</td>
+<td>-</td></tr>
+<tr class="b">
+<td style="text-align: left;">csshell</td>
+<td>tine</td>
+<td>1.0</td>
+<td>jar</td>
+<td>-</td></tr>
+<tr class="a">
 <td style="text-align: left;">org.apache.commons</td>
 <td><a class="externalLink" href="https://commons.apache.org/proper/commons-lang/">commons-lang3</a></td>
 <td>3.13.0</td>
 <td>jar</td>
 <td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></td></tr>
 <tr class="b">
-<td style="text-align: left;">org.apache.commons</td>
-<td><a class="externalLink" href="https://commons.apache.org/proper/commons-text">commons-text</a></td>
-<td>1.11.0</td>
-<td>jar</td>
-<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></td></tr>
-<tr class="a">
 <td style="text-align: left;">org.apache.logging.log4j</td>
 <td><a class="externalLink" href="https://logging.apache.org/log4j/2.x/log4j/log4j-api/">log4j-api</a></td>
 <td>2.21.1</td>
 <td>jar</td>
 <td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">org.apache.logging.log4j</td>
 <td><a class="externalLink" href="https://logging.apache.org/log4j/2.x/log4j/log4j-core/">log4j-core</a></td>
 <td>2.21.1</td>
 <td>jar</td>
 <td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></td></tr>
-<tr class="a">
-<td style="text-align: left;">org.epics</td>
-<td><a class="externalLink" href="http://epics-util.sourceforge.net">epics-util</a></td>
-<td>0.3.2</td>
-<td>jar</td>
-<td><a href="LICENSE.TXT">GNU General Public License 2 with the Classpath Exception</a></td></tr>
 <tr class="b">
-<td style="text-align: left;">org.epics</td>
-<td><a class="externalLink" href="http://pvmanager.diirt.org/epics-vtype">epics-vtype</a></td>
-<td>2.9.0</td>
-<td>jar</td>
-<td><a href="LICENSE.TXT">GNU General Public License 2 with the Classpath Exception</a></td></tr>
-<tr class="a">
 <td style="text-align: left;">org.epics</td>
 <td><a class="externalLink" href="https://github.com/epics-base/jca">jca</a></td>
 <td>2.4.8</td>
@@ -172,18 +168,28 @@
 <th>GroupId</th>
 <th>ArtifactId</th>
 <th>Version</th>
+<th>Classifier</th>
 <th>Type</th>
 <th>Licenses</th></tr>
 <tr class="b">
+<td style="text-align: left;">csshell</td>
+<td>csshell</td>
+<td>2.0</td>
+<td>tests</td>
+<td>test-jar</td>
+<td>-</td></tr>
+<tr class="a">
 <td style="text-align: left;">junit</td>
 <td><a class="externalLink" href="http://junit.org">junit</a></td>
 <td>4.13.2</td>
+<td>-</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.eclipse.org/legal/epl-v10.html">Eclipse Public License 1.0</a></td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">org.junit.jupiter</td>
 <td><a class="externalLink" href="https://junit.org/junit5/">junit-jupiter-api</a></td>
 <td>5.10.1</td>
+<td>-</td>
 <td>jar</td>
 <td><a class="externalLink" href="https://www.eclipse.org/legal/epl-v20.html">Eclipse Public License v2.0</a></td></tr></table></section></section><a id="Project_Transitive_Dependencies"></a><section>
 <h1>Project Transitive Dependencies</h1>
@@ -198,17 +204,17 @@
 <th>Type</th>
 <th>Licenses</th></tr>
 <tr class="b">
+<td style="text-align: left;">com.fasterxml.jackson.core</td>
+<td><a class="externalLink" href="https://github.com/FasterXML/jackson-core">jackson-core</a></td>
+<td>2.16.0</td>
+<td>jar</td>
+<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
+<tr class="a">
 <td style="text-align: left;">com.jcraft</td>
 <td><a class="externalLink" href="http://www.jcraft.com/jsch/">jsch</a></td>
 <td>0.1.55</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.jcraft.com/jsch/LICENSE.txt">Revised BSD</a></td></tr>
-<tr class="a">
-<td style="text-align: left;">commons-io</td>
-<td><a class="externalLink" href="https://commons.apache.org/proper/commons-io/">commons-io</a></td>
-<td>2.15.0</td>
-<td>jar</td>
-<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></td></tr>
 <tr class="b">
 <td style="text-align: left;">commons-logging</td>
 <td><a class="externalLink" href="http://commons.apache.org/logging">commons-logging</a></td>
@@ -244,7 +250,25 @@
 <td><a class="externalLink" href="https://commons.apache.org/proper/commons-csv/">commons-csv</a></td>
 <td>1.10.0</td>
 <td>jar</td>
-<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></td></tr></table></section><a id="Project_Transitive_Dependencies_test"></a><section>
+<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></td></tr>
+<tr class="b">
+<td style="text-align: left;">org.apache.commons</td>
+<td><a class="externalLink" href="https://commons.apache.org/proper/commons-text">commons-text</a></td>
+<td>1.11.0</td>
+<td>jar</td>
+<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></td></tr>
+<tr class="a">
+<td style="text-align: left;">org.epics</td>
+<td><a class="externalLink" href="http://epics-util.sourceforge.net">epics-util</a></td>
+<td>0.3.2</td>
+<td>jar</td>
+<td><a href="LICENSE.TXT">GNU General Public License 2 with the Classpath Exception</a></td></tr>
+<tr class="b">
+<td style="text-align: left;">org.epics</td>
+<td><a class="externalLink" href="http://pvmanager.diirt.org/epics-vtype">epics-vtype</a></td>
+<td>2.9.0</td>
+<td>jar</td>
+<td><a href="LICENSE.TXT">GNU General Public License 2 with the Classpath Exception</a></td></tr></table></section><a id="Project_Transitive_Dependencies_test"></a><section>
 <h2>test</h2>
 <p>The following is a list of test dependencies for this project. These dependencies are only required to compile and run unit tests for the application:</p>
 <table class="table table-striped">
@@ -299,13 +323,13 @@
 </script><a id="Dependency_Tree"></a><section>
 <h2>Dependency Tree</h2>
 <ul>
-<li>csshell:ocserver:jar:2.0 <img id="_img1" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep0', '_img1' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep0" style="display:none">
+<li>csshell:flute-csshell:jar:1.0 <img id="_img1" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep0', '_img1' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep0" style="display:none">
 <table class="table table-striped">
 <tr class="a">
-<th>Orbit Correction Server</th></tr>
+<th>FLUTE CS-Shell</th></tr>
 <tr class="b">
 <td style="text-align: left;">
-<p><b>Description: </b>Orbit Correction Server</p>
+<p><b>Description: </b>CS-Shell  and other Java classes for FLUTE project</p>
 <p><b>Project Licenses: </b>No licenses are defined for this project.</p></td></tr></table></div>
 <ul>
 <li>csshell:anka-common:jar:1.0 (compile) <img id="_img3" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep2', '_img3' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep2" style="display:none">
@@ -349,17 +373,7 @@
 <td style="text-align: left;">
 <p><b>Description: </b>POM was created from install:install-file</p>
 <p><b>Project Licenses: </b>No licenses are defined for this project.</p></td></tr></table></div></li>
-<li>commons-io:commons-io:jar:2.15.0 (compile) <img id="_img13" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep12', '_img13' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep12" style="display:none">
-<table class="table table-striped">
-<tr class="a">
-<th>Apache Commons IO</th></tr>
-<tr class="b">
-<td style="text-align: left;">
-<p><b>Description: </b>The Apache Commons IO library contains utility classes, stream implementations, file filters,
-file comparators, endian transformation classes, and much more.</p>
-<p><b>URL: </b><a class="externalLink" href="https://commons.apache.org/proper/commons-io/">https://commons.apache.org/proper/commons-io/</a></p>
-<p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></p></td></tr></table></div></li>
-<li>org.apache.commons:commons-csv:jar:1.10.0 (compile) <img id="_img15" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep14', '_img15' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep14" style="display:none">
+<li>org.apache.commons:commons-csv:jar:1.10.0 (compile) <img id="_img13" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep12', '_img13' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep12" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>Apache Commons CSV</th></tr>
@@ -368,7 +382,25 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>The Apache Commons CSV library provides a simple interface for reading and writing CSV files of various types.</p>
 <p><b>URL: </b><a class="externalLink" href="https://commons.apache.org/proper/commons-csv/">https://commons.apache.org/proper/commons-csv/</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></p></td></tr></table></div></li>
-<li>com.jcraft:jsch:jar:0.1.55 (compile) <img id="_img17" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep16', '_img17' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep16" style="display:none">
+<li>org.apache.commons:commons-text:jar:1.11.0 (compile) <img id="_img15" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep14', '_img15' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep14" style="display:none">
+<table class="table table-striped">
+<tr class="a">
+<th>Apache Commons Text</th></tr>
+<tr class="b">
+<td style="text-align: left;">
+<p><b>Description: </b>Apache Commons Text is a library focused on algorithms working on strings.</p>
+<p><b>URL: </b><a class="externalLink" href="https://commons.apache.org/proper/commons-text">https://commons.apache.org/proper/commons-text</a></p>
+<p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></p></td></tr></table></div></li>
+<li>com.fasterxml.jackson.core:jackson-core:jar:2.16.0 (compile) <img id="_img17" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep16', '_img17' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep16" style="display:none">
+<table class="table table-striped">
+<tr class="a">
+<th>Jackson-core</th></tr>
+<tr class="b">
+<td style="text-align: left;">
+<p><b>Description: </b>Core Jackson processing abstractions (aka Streaming API), implementation for JSON</p>
+<p><b>URL: </b><a class="externalLink" href="https://github.com/FasterXML/jackson-core">https://github.com/FasterXML/jackson-core</a></p>
+<p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
+<li>com.jcraft:jsch:jar:0.1.55 (compile) <img id="_img19" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep18', '_img19' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep18" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>JSch</th></tr>
@@ -376,8 +408,51 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: left;">
 <p><b>Description: </b>JSch is a pure Java implementation of SSH2</p>
 <p><b>URL: </b><a class="externalLink" href="http://www.jcraft.com/jsch/">http://www.jcraft.com/jsch/</a></p>
-<p><b>Project Licenses: </b><a class="externalLink" href="http://www.jcraft.com/jsch/LICENSE.txt">Revised BSD</a></p></td></tr></table></div></li></ul></li>
-<li>commons-collections:commons-collections:jar:3.2.2 (compile) <img id="_img19" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep18', '_img19' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep18" style="display:none">
+<p><b>Project Licenses: </b><a class="externalLink" href="http://www.jcraft.com/jsch/LICENSE.txt">Revised BSD</a></p></td></tr></table></div></li>
+<li>org.epics:epics-util:jar:0.3.2 (compile) <img id="_img21" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep20', '_img21' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep20" style="display:none">
+<table class="table table-striped">
+<tr class="a">
+<th>epics-util</th></tr>
+<tr class="b">
+<td style="text-align: left;">
+<p><b>Description: </b>Basic Java utility classes to be shared across projects until suitable replacements are available in the JDK.</p>
+<p><b>URL: </b><a class="externalLink" href="http://epics-util.sourceforge.net">http://epics-util.sourceforge.net</a></p>
+<p><b>Project Licenses: </b><a href="LICENSE.TXT">GNU General Public License 2 with the Classpath Exception</a></p></td></tr></table></div></li>
+<li>org.epics:epics-vtype:jar:2.9.0 (compile) <img id="_img23" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep22', '_img23' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep22" style="display:none">
+<table class="table table-striped">
+<tr class="a">
+<th>epics-vtype</th></tr>
+<tr class="b">
+<td style="text-align: left;">
+<p><b>Description: </b>A library to create well behaved clients for aggregating and processing
+        real-time live data.</p>
+<p><b>URL: </b><a class="externalLink" href="http://pvmanager.diirt.org/epics-vtype">http://pvmanager.diirt.org/epics-vtype</a></p>
+<p><b>Project Licenses: </b><a href="LICENSE.TXT">GNU General Public License 2 with the Classpath Exception</a></p></td></tr></table></div></li></ul></li>
+<li>csshell:csshell:test-jar:tests:2.0 (test) <img id="_img25" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep24', '_img25' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep24" style="display:none">
+<table class="table table-striped">
+<tr class="a">
+<th>CS-Shell</th></tr>
+<tr class="b">
+<td style="text-align: left;">
+<p><b>Description: </b>Main CS-Shell and other Java classes</p>
+<p><b>Project Licenses: </b>No licenses are defined for this project.</p></td></tr></table></div></li>
+<li>csshell:jdoocs:jar:1.0 (compile) <img id="_img27" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep26', '_img27' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep26" style="display:none">
+<table class="table table-striped">
+<tr class="a">
+<th>jdoocs</th></tr>
+<tr class="b">
+<td style="text-align: left;">
+<p><b>Description: </b>There is currently no description associated with this project.</p>
+<p><b>Project Licenses: </b>No licenses are defined for this project.</p></td></tr></table></div></li>
+<li>csshell:tine:jar:1.0 (compile) <img id="_img29" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep28', '_img29' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep28" style="display:none">
+<table class="table table-striped">
+<tr class="a">
+<th>tine</th></tr>
+<tr class="b">
+<td style="text-align: left;">
+<p><b>Description: </b>There is currently no description associated with this project.</p>
+<p><b>Project Licenses: </b>No licenses are defined for this project.</p></td></tr></table></div></li>
+<li>commons-collections:commons-collections:jar:3.2.2 (compile) <img id="_img31" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep30', '_img31' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep30" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>Apache Commons Collections</th></tr>
@@ -386,7 +461,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>Types that extend and augment the Java Collections Framework.</p>
 <p><b>URL: </b><a class="externalLink" href="http://commons.apache.org/collections/">http://commons.apache.org/collections/</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></p></td></tr></table></div></li>
-<li>commons-configuration:commons-configuration:jar:1.10 (compile) <img id="_img21" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep20', '_img21' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep20" style="display:none">
+<li>commons-configuration:commons-configuration:jar:1.10 (compile) <img id="_img33" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep32', '_img33' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep32" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>Apache Commons Configuration</th></tr>
@@ -396,7 +471,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="http://commons.apache.org/configuration/">http://commons.apache.org/configuration/</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
 <ul>
-<li>commons-logging:commons-logging:jar:1.1.1 (compile) <img id="_img23" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep22', '_img23' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep22" style="display:none">
+<li>commons-logging:commons-logging:jar:1.1.1 (compile) <img id="_img35" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep34', '_img35' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep34" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>Commons Logging</th></tr>
@@ -406,7 +481,7 @@ file comparators, endian transformation classes, and much more.</p>
     well known logging systems.</p>
 <p><b>URL: </b><a class="externalLink" href="http://commons.apache.org/logging">http://commons.apache.org/logging</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
-<li>org.apache.logging.log4j:log4j-api:jar:2.21.1 (compile) <img id="_img25" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep24', '_img25' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep24" style="display:none">
+<li>org.apache.logging.log4j:log4j-api:jar:2.21.1 (compile) <img id="_img37" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep36', '_img37' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep36" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>Apache Log4j API</th></tr>
@@ -415,7 +490,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>The Apache Log4j API</p>
 <p><b>URL: </b><a class="externalLink" href="https://logging.apache.org/log4j/2.x/log4j/log4j-api/">https://logging.apache.org/log4j/2.x/log4j/log4j-api/</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></p></td></tr></table></div></li>
-<li>org.apache.logging.log4j:log4j-core:jar:2.21.1 (compile) <img id="_img27" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep26', '_img27' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep26" style="display:none">
+<li>org.apache.logging.log4j:log4j-core:jar:2.21.1 (compile) <img id="_img39" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep38', '_img39' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep38" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>Apache Log4j Core</th></tr>
@@ -424,7 +499,17 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>The Apache Log4j Implementation</p>
 <p><b>URL: </b><a class="externalLink" href="https://logging.apache.org/log4j/2.x/log4j/log4j-core/">https://logging.apache.org/log4j/2.x/log4j/log4j-core/</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></p></td></tr></table></div></li>
-<li>commons-lang:commons-lang:jar:2.6 (compile) <img id="_img29" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep28', '_img29' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep28" style="display:none">
+<li>commons-io:commons-io:jar:2.15.0 (compile) <img id="_img41" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep40', '_img41' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep40" style="display:none">
+<table class="table table-striped">
+<tr class="a">
+<th>Apache Commons IO</th></tr>
+<tr class="b">
+<td style="text-align: left;">
+<p><b>Description: </b>The Apache Commons IO library contains utility classes, stream implementations, file filters,
+file comparators, endian transformation classes, and much more.</p>
+<p><b>URL: </b><a class="externalLink" href="https://commons.apache.org/proper/commons-io/">https://commons.apache.org/proper/commons-io/</a></p>
+<p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></p></td></tr></table></div></li>
+<li>commons-lang:commons-lang:jar:2.6 (compile) <img id="_img43" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep42', '_img43' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep42" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>Commons Lang</th></tr>
@@ -435,7 +520,7 @@ file comparators, endian transformation classes, and much more.</p>
         standard as to justify existence in java.lang.</p>
 <p><b>URL: </b><a class="externalLink" href="http://commons.apache.org/lang/">http://commons.apache.org/lang/</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.apache.commons:commons-lang3:jar:3.13.0 (compile) <img id="_img31" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep30', '_img31' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep30" style="display:none">
+<li>org.apache.commons:commons-lang3:jar:3.13.0 (compile) <img id="_img45" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep44', '_img45' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep44" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>Apache Commons Lang</th></tr>
@@ -446,16 +531,7 @@ file comparators, endian transformation classes, and much more.</p>
   standard as to justify existence in java.lang.</p>
 <p><b>URL: </b><a class="externalLink" href="https://commons.apache.org/proper/commons-lang/">https://commons.apache.org/proper/commons-lang/</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></p></td></tr></table></div></li>
-<li>org.apache.commons:commons-text:jar:1.11.0 (compile) <img id="_img33" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep32', '_img33' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep32" style="display:none">
-<table class="table table-striped">
-<tr class="a">
-<th>Apache Commons Text</th></tr>
-<tr class="b">
-<td style="text-align: left;">
-<p><b>Description: </b>Apache Commons Text is a library focused on algorithms working on strings.</p>
-<p><b>URL: </b><a class="externalLink" href="https://commons.apache.org/proper/commons-text">https://commons.apache.org/proper/commons-text</a></p>
-<p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0</a></p></td></tr></table></div></li>
-<li>com.sun.mail:javax.mail:jar:1.6.2 (compile) <img id="_img35" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep34', '_img35' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep34" style="display:none">
+<li>com.sun.mail:javax.mail:jar:1.6.2 (compile) <img id="_img47" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep46', '_img47' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep46" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>JavaMail API</th></tr>
@@ -465,7 +541,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="http://javaee.github.io/javamail/javax.mail">http://javaee.github.io/javamail/javax.mail</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://javaee.github.io/javamail/LICENSE">CDDL/GPLv2+CE</a></p></td></tr></table></div>
 <ul>
-<li>javax.activation:activation:jar:1.1 (compile) <img id="_img37" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep36', '_img37' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep36" style="display:none">
+<li>javax.activation:activation:jar:1.1 (compile) <img id="_img49" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep48', '_img49' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep48" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>JavaBeans Activation Framework (JAF)</th></tr>
@@ -474,16 +550,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>JavaBeans Activation Framework (JAF) is a standard extension to the Java platform that lets you take advantage of standard services to: determine the type of an arbitrary piece of data; encapsulate access to it; discover the operations available on it; and instantiate the appropriate bean to perform the operation(s).</p>
 <p><b>URL: </b><a class="externalLink" href="http://java.sun.com/products/javabeans/jaf/index.jsp">http://java.sun.com/products/javabeans/jaf/index.jsp</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://glassfish.dev.java.net/public/CDDLv1.0.html">Common Development and Distribution License (CDDL) v1.0</a></p></td></tr></table></div></li></ul></li>
-<li>com.fasterxml.jackson.core:jackson-core:jar:2.16.0 (compile) <img id="_img39" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep38', '_img39' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep38" style="display:none">
-<table class="table table-striped">
-<tr class="a">
-<th>Jackson-core</th></tr>
-<tr class="b">
-<td style="text-align: left;">
-<p><b>Description: </b>Core Jackson processing abstractions (aka Streaming API), implementation for JSON</p>
-<p><b>URL: </b><a class="externalLink" href="https://github.com/FasterXML/jackson-core">https://github.com/FasterXML/jackson-core</a></p>
-<p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.epics:jca:jar:2.4.8 (compile) <img id="_img41" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep40', '_img41' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep40" style="display:none">
+<li>org.epics:jca:jar:2.4.8 (compile) <img id="_img51" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep50', '_img51' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep50" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>Java Channel Access</th></tr>
@@ -493,26 +560,7 @@ file comparators, endian transformation classes, and much more.</p>
   &lt;p&gt;This module also includes CAJ, A 100% pure Java implementation of the EPICS Channel Access library.&lt;/p&gt;</p>
 <p><b>URL: </b><a class="externalLink" href="https://github.com/epics-base/jca">https://github.com/epics-base/jca</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://tldrlegal.com/license/mit-license">The MIT License</a></p></td></tr></table></div></li>
-<li>org.epics:epics-util:jar:0.3.2 (compile) <img id="_img43" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep42', '_img43' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep42" style="display:none">
-<table class="table table-striped">
-<tr class="a">
-<th>epics-util</th></tr>
-<tr class="b">
-<td style="text-align: left;">
-<p><b>Description: </b>Basic Java utility classes to be shared across projects until suitable replacements are available in the JDK.</p>
-<p><b>URL: </b><a class="externalLink" href="http://epics-util.sourceforge.net">http://epics-util.sourceforge.net</a></p>
-<p><b>Project Licenses: </b><a href="LICENSE.TXT">GNU General Public License 2 with the Classpath Exception</a></p></td></tr></table></div></li>
-<li>org.epics:epics-vtype:jar:2.9.0 (compile) <img id="_img45" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep44', '_img45' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep44" style="display:none">
-<table class="table table-striped">
-<tr class="a">
-<th>epics-vtype</th></tr>
-<tr class="b">
-<td style="text-align: left;">
-<p><b>Description: </b>A library to create well behaved clients for aggregating and processing
-        real-time live data.</p>
-<p><b>URL: </b><a class="externalLink" href="http://pvmanager.diirt.org/epics-vtype">http://pvmanager.diirt.org/epics-vtype</a></p>
-<p><b>Project Licenses: </b><a href="LICENSE.TXT">GNU General Public License 2 with the Classpath Exception</a></p></td></tr></table></div></li>
-<li>junit:junit:jar:4.13.2 (test) <img id="_img47" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep46', '_img47' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep46" style="display:none">
+<li>junit:junit:jar:4.13.2 (test) <img id="_img53" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep52', '_img53' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep52" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>JUnit</th></tr>
@@ -522,7 +570,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="http://junit.org">http://junit.org</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.eclipse.org/legal/epl-v10.html">Eclipse Public License 1.0</a></p></td></tr></table></div>
 <ul>
-<li>org.hamcrest:hamcrest-core:jar:1.3 (test) <img id="_img49" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep48', '_img49' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep48" style="display:none">
+<li>org.hamcrest:hamcrest-core:jar:1.3 (test) <img id="_img55" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep54', '_img55' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep54" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>Hamcrest Core</th></tr>
@@ -531,7 +579,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>This is the core API of hamcrest matcher framework to be used by third-party framework providers. This includes the a foundation set of matcher implementations for common operations.</p>
 <p><b>URL: </b><a class="externalLink" href="https://github.com/hamcrest/JavaHamcrest/hamcrest-core">https://github.com/hamcrest/JavaHamcrest/hamcrest-core</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></p></td></tr></table></div></li></ul></li>
-<li>org.junit.jupiter:junit-jupiter-api:jar:5.10.1 (test) <img id="_img51" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep50', '_img51' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep50" style="display:none">
+<li>org.junit.jupiter:junit-jupiter-api:jar:5.10.1 (test) <img id="_img57" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep56', '_img57' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep56" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>JUnit Jupiter API</th></tr>
@@ -541,7 +589,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>URL: </b><a class="externalLink" href="https://junit.org/junit5/">https://junit.org/junit5/</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.eclipse.org/legal/epl-v20.html">Eclipse Public License v2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.opentest4j:opentest4j:jar:1.3.0 (test) <img id="_img53" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep52', '_img53' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep52" style="display:none">
+<li>org.opentest4j:opentest4j:jar:1.3.0 (test) <img id="_img59" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep58', '_img59' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep58" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>org.opentest4j:opentest4j</th></tr>
@@ -550,7 +598,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>Open Test Alliance for the JVM</p>
 <p><b>URL: </b><a class="externalLink" href="https://github.com/ota4j-team/opentest4j">https://github.com/ota4j-team/opentest4j</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">The Apache License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.junit.platform:junit-platform-commons:jar:1.10.1 (test) <img id="_img55" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep54', '_img55' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep54" style="display:none">
+<li>org.junit.platform:junit-platform-commons:jar:1.10.1 (test) <img id="_img61" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep60', '_img61' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep60" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>JUnit Platform Commons</th></tr>
@@ -559,7 +607,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Description: </b>Module &quot;junit-platform-commons&quot; of JUnit 5.</p>
 <p><b>URL: </b><a class="externalLink" href="https://junit.org/junit5/">https://junit.org/junit5/</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.eclipse.org/legal/epl-v20.html">Eclipse Public License v2.0</a></p></td></tr></table></div></li>
-<li>org.apiguardian:apiguardian-api:jar:1.1.2 (test) <img id="_img57" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep56', '_img57' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep56" style="display:none">
+<li>org.apiguardian:apiguardian-api:jar:1.1.2 (test) <img id="_img63" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep62', '_img63' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep62" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>org.apiguardian:apiguardian-api</th></tr>
@@ -576,7 +624,7 @@ file comparators, endian transformation classes, and much more.</p>
 <p><b>Eclipse Public License v2.0: </b>JUnit Jupiter API, JUnit Platform Commons</p>
 <p><b>New BSD License: </b>Hamcrest Core</p>
 <p><b>CDDL/GPLv2+CE: </b>JavaMail API</p>
-<p><b>Unknown: </b>CS-Shell, Orbit Correction Server, anka-common, com.aquenos.csstudio.archive.json.reader, org.csstudio.archive.reader, org.eclipse.osgi</p>
+<p><b>Unknown: </b>CS-Shell, FLUTE CS-Shell, anka-common, com.aquenos.csstudio.archive.json.reader, jdoocs, org.csstudio.archive.reader, org.eclipse.osgi, tine</p>
 <p><b>The MIT License: </b>Java Channel Access</p>
 <p><b>Apache-2.0: </b>Apache Commons CSV, Apache Commons IO, Apache Commons Lang, Apache Commons Text, Apache Log4j API, Apache Log4j Core</p>
 <p><b>Apache License, Version 2.0: </b>Apache Commons Collections</p>
@@ -681,6 +729,22 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: center;">17</td>
 <td style="text-align: center;">Yes</td></tr>
 <tr class="a">
+<td style="text-align: left;">csshell-2.0-tests.jar</td>
+<td style="text-align: right;">87.2 kB</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td></tr>
+<tr class="b">
+<td style="text-align: left;">jdoocs-1.0.jar</td>
+<td style="text-align: right;">450.6 kB</td>
+<td style="text-align: right;">208</td>
+<td style="text-align: right;">185</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: center;">1.7</td>
+<td style="text-align: center;">Yes</td></tr>
+<tr class="a">
 <td style="text-align: left;">org.csstudio.archive.reader-3.2.11.jar</td>
 <td style="text-align: right;">13.5 kB</td>
 <td style="text-align: right;">23</td>
@@ -697,6 +761,14 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: center;">1.6</td>
 <td style="text-align: center;">Yes</td></tr>
 <tr class="a">
+<td style="text-align: left;">tine-1.0.jar</td>
+<td style="text-align: right;">1.5 MB</td>
+<td style="text-align: right;">645</td>
+<td style="text-align: right;">606</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: center;">1.7</td>
+<td style="text-align: center;">Yes</td></tr>
+<tr class="b">
 <td style="text-align: left;">activation-1.1.jar</td>
 <td style="text-align: right;">63 kB</td>
 <td style="text-align: right;">50</td>
@@ -704,7 +776,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: right;">3</td>
 <td style="text-align: center;">1.4</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">junit-4.13.2.jar</td>
 <td style="text-align: right;">384.6 kB</td>
 <td style="text-align: right;">389</td>
@@ -712,7 +784,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: right;">32</td>
 <td style="text-align: center;">1.5</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">commons-csv-1.10.0.jar</td>
 <td style="text-align: right;">54.7 kB</td>
 <td style="text-align: right;">32</td>
@@ -720,7 +792,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: right;">1</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">commons-lang3-3.13.0.jar</td>
 <td style="text-align: right;">632.3 kB</td>
 <td style="text-align: right;">420</td>
@@ -728,7 +800,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: right;">18</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">commons-text-1.11.0.jar</td>
 <td style="text-align: right;">246.7 kB</td>
 <td style="text-align: right;">180</td>
@@ -736,7 +808,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: right;">9</td>
 <td style="text-align: center;">9</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">log4j-api-2.21.1.jar</td>
 <td style="text-align: right;">317.5 kB</td>
 <td style="text-align: right;">224</td>
@@ -744,7 +816,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: right;">9</td>
 <td style="text-align: center;">9</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">log4j-core-2.21.1.jar</td>
 <td style="text-align: right;">1.9 MB</td>
 <td style="text-align: right;">1325</td>
@@ -752,7 +824,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: right;">55</td>
 <td style="text-align: center;">9</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">apiguardian-api-1.1.2.jar</td>
 <td style="text-align: right;">6.8 kB</td>
 <td style="text-align: right;">9</td>
@@ -760,7 +832,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: right;">2</td>
 <td style="text-align: center;">9</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">epics-util-0.3.2.jar</td>
 <td style="text-align: right;">89.7 kB</td>
 <td style="text-align: right;">105</td>
@@ -768,7 +840,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: right;">5</td>
 <td style="text-align: center;">1.7</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">epics-vtype-2.9.0.jar</td>
 <td style="text-align: right;">90.5 kB</td>
 <td style="text-align: right;">111</td>
@@ -776,7 +848,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: right;">4</td>
 <td style="text-align: center;">1.7</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">jca-2.4.8.jar</td>
 <td style="text-align: right;">430.1 kB</td>
 <td style="text-align: right;">338</td>
@@ -784,7 +856,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: right;">20</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">hamcrest-core-1.3.jar</td>
 <td style="text-align: right;">45 kB</td>
 <td style="text-align: right;">52</td>
@@ -792,7 +864,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: right;">3</td>
 <td style="text-align: center;">1.5</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">junit-jupiter-api-5.10.1.jar</td>
 <td style="text-align: right;">211 kB</td>
 <td style="text-align: right;">197</td>
@@ -800,7 +872,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: right;">8</td>
 <td style="text-align: center;">9</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">junit-platform-commons-1.10.1.jar</td>
 <td style="text-align: right;">106.3 kB</td>
 <td style="text-align: right;">64</td>
@@ -808,7 +880,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: right;">7</td>
 <td style="text-align: center;">9</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">opentest4j-1.3.0.jar</td>
 <td style="text-align: right;">14.3 kB</td>
 <td style="text-align: right;">15</td>
@@ -816,7 +888,7 @@ file comparators, endian transformation classes, and much more.</p>
 <td style="text-align: right;">2</td>
 <td style="text-align: center;">9</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <th>Total</th>
 <th>Size</th>
 <th>Entries</th>
@@ -824,25 +896,25 @@ file comparators, endian transformation classes, and much more.</p>
 <th>Packages</th>
 <th>Java Version</th>
 <th>Debug Information</th></tr>
-<tr class="a">
-<td style="text-align: right;">28</td>
-<td style="text-align: right;">10.1 MB</td>
-<td style="text-align: right;">6865</td>
-<td style="text-align: right;">5930</td>
-<td style="text-align: right;">365</td>
-<td style="text-align: center;">19</td>
-<td style="text-align: right;">28</td></tr>
 <tr class="b">
-<td style="text-align: right;">compile: 22</td>
-<td style="text-align: right;">compile: 9.3 MB</td>
-<td style="text-align: right;">compile: 6139</td>
-<td style="text-align: right;">compile: 5297</td>
-<td style="text-align: right;">compile: 311</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">12.1 MB</td>
+<td style="text-align: right;">7718</td>
+<td style="text-align: right;">6721</td>
+<td style="text-align: right;">401</td>
 <td style="text-align: center;">19</td>
-<td style="text-align: right;">compile: 22</td></tr>
+<td style="text-align: right;">30</td></tr>
 <tr class="a">
-<td style="text-align: right;">test: 6</td>
-<td style="text-align: right;">test: 767.9 kB</td>
+<td style="text-align: right;">compile: 24</td>
+<td style="text-align: right;">compile: 11.2 MB</td>
+<td style="text-align: right;">compile: 6992</td>
+<td style="text-align: right;">compile: 6088</td>
+<td style="text-align: right;">compile: 347</td>
+<td style="text-align: center;">19</td>
+<td style="text-align: right;">compile: 24</td></tr>
+<tr class="b">
+<td style="text-align: right;">test: 7</td>
+<td style="text-align: right;">test: 855.1 kB</td>
 <td style="text-align: right;">test: 726</td>
 <td style="text-align: right;">test: 633</td>
 <td style="text-align: right;">test: 54</td>
