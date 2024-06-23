@@ -27,36 +27,38 @@
     <csshellSource>https://scm.ibpt.kit.edu/scm/svn/flute/controls/java/FLUTE-JavaCommon/trunk</csshellSource>
     <csshellLink>https://share.flute.ibpt.kit.edu/smbshare/Controlsystem/Maven/site/csshell/</csshellLink>
     <csshellLinkFlute>https://share.flute.ibpt.kit.edu/smbshare/Controlsystem/Maven/site/flute-csshell/</csshellLinkFlute>
+    <ocserverLink>https://share.flute.ibpt.kit.edu/smbshare/Controlsystem/Maven/site/ocserver/</ocserverLink>
     
   </properties>
 
   <profiles>
-  <profile>
-    <id>github</id>
-    <properties>
-      <csshellSource>https://github.com/KIT-IBPT/epics-cs-shell-flute</csshellSource>
-      <csshellLink>https://kit-ibpt.github.io/epics-cs-shell/</csshellLink>
-      <csshellLinkFlute>https://kit-ibpt.github.io/epics-cs-shell-flute/</csshellLinkFlute>
-    </properties>
-    <distributionManagement>
-    <site>
+    <profile>
       <id>github</id>
-      <url>scm:git:ssh://git@github.com/KIT-IBPT/epics-cs-shell-flute.git</url>
-    </site>
-    </distributionManagement>
-    <build>
-    <plugins>
-      <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-scm-publish-plugin</artifactId>
-      <version>3.2.1</version>
-      <configuration>
-        <scmBranch>gh-pages</scmBranch>
-      </configuration>
-      </plugin>
-    </plugins>
-    </build>
-  </profile>
+      <properties>
+        <csshellSource>https://github.com/KIT-IBPT/epics-cs-shell-flute</csshellSource>
+        <csshellLink>https://kit-ibpt.github.io/epics-cs-shell/</csshellLink>
+        <csshellLinkFlute>https://kit-ibpt.github.io/epics-cs-shell-flute/</csshellLinkFlute>
+        <ocserverLink>https://kit-ibpt.github.io/oc-server/</ocserverLink>
+      </properties>
+      <distributionManagement>
+      <site>
+        <id>github</id>
+        <url>scm:git:ssh://git@github.com/KIT-IBPT/epics-cs-shell-flute.git</url>
+      </site>
+      </distributionManagement>
+      <build>
+      <plugins>
+        <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-scm-publish-plugin</artifactId>
+        <version>3.2.1</version>
+        <configuration>
+          <scmBranch>gh-pages</scmBranch>
+        </configuration>
+        </plugin>
+      </plugins>
+      </build>
+    </profile>
   </profiles>
 
 

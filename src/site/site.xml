@@ -4,10 +4,10 @@
   xsi:schemaLocation="http://maven.apache.org/SITE/2.0.0 https://maven.apache.org/xsd/site-2.0.0.xsd"
   name="CS-Shell-FLUTE EPICS Application Server">
   
-  <bannerLeft name="CS-Shell-FLUTE EPICS Application Server">
-  </bannerLeft>
+  <bannerLeft name="CS-Shell-FLUTE EPICS Application Server"/>
 
-  <publishDate timezone="CET" />
+  <version position="left"/>
+  <publishDate position="left" timezone="CET" />
   
   <body>
 
@@ -26,6 +26,7 @@
     <menu name="Projects">
       <item name="CS-Shell App Server" href="${csshellLink}" />
       <item name="CS-Shell-FLUTE App Server" href="${csshellLinkFlute}" />
+      <item name="Orbit Correction Server" href="${ocserverLink}" />
     </menu>
 
     <menu ref="reports" />
